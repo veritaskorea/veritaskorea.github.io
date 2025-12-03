@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>신은 죽지 않았다 (상세요약) - VERITAS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;500;700&family=Noto+Sans+KR:wght@300;400;700&display=swap');
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #020617; /* Slate 950 */
+            color: #e2e8f0;
+            line-height: 1.8;
+        }
+        
+        h1, h2, h3, h4, h5, .serif {
+            font-family: 'Noto Serif KR', serif;
+        }
+
+        /* Animations */
+        .fade-in { animation: fadeIn 0.8s ease-out; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .nav-active {
+            color: #fbbf24; /* Amber 400 */
+            border-bottom: 2px solid #fbbf24;
+            text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+        }
+
+        /* Abstract Art Orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.4;
+            animation: float 15s infinite ease-in-out;
+            z-index: -1;
+        }
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -30px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+        }
+
+        /* Custom Components */
+        .quote-box {
+            border-left: 4px solid #fbbf24;
+            padding: 1.5rem;
+            font-style: italic;
+            color: #cbd5e1;
+            margin: 2rem 0;
+            background: linear-gradient(90deg, rgba(251, 191, 36, 0.05) 0%, transparent 100%);
+            border-radius: 0 1rem 1rem 0;
+        }
+
+        .concept-card {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            transition: all 0.3s ease;
+        }
+        .concept-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(251, 191, 36, 0.4);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+        }
+
+        .discussion-box {
+            background: linear-gradient(135deg, rgba(76, 29, 149, 0.1) 0%, rgba(30, 27, 75, 0.3) 100%);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .discussion-title {
+            color: #c4b5fd;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .editor-note {
+            background-color: #1e1b4b; /* Indigo 950 */
+            border: 1px solid #4338ca;
+            padding: 2.5rem;
+            border-radius: 1rem;
+            position: relative;
+            margin-top: 4rem;
+        }
+        .editor-note::before {
+            content: '\f10d';
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            top: -20px;
+            left: 30px;
+            font-size: 3rem;
+            color: #4338ca;
+            background-color: #020617;
+            padding: 0 10px;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen selection:bg-amber-500 selection:text-slate-900">
+
+    <!-- Navigation Bar -->
+    <nav class="sticky top-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800 shadow-2xl">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo with VERITAS -->
+                <a href="#" onclick="showPage('home')" class="group flex items-center gap-3 hover:text-amber-300 transition">
+                    <div class="flex flex-col items-end border-r-2 border-slate-700 pr-3 mr-1">
+                        <span class="text-xs font-bold text-slate-400 tracking-[0.2em] group-hover:text-amber-400 transition">VERITAS</span>
+                        <span class="text-[0.6rem] text-slate-600 uppercase tracking-wider">Presents</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-2xl font-bold text-amber-400">
+                        <i class="fa-solid fa-infinity fa-lg"></i>
+                        <span class="tracking-widest font-serif">QUANTUM</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden lg:flex space-x-8 text-sm font-medium tracking-wide text-slate-300">
+                    <button onclick="showPage('12-1')" id="nav-12-1" class="hover:text-amber-300 transition-all py-2 opacity-80 hover:opacity-100">1부: 증거</button>
+                    <button onclick="showPage('12-2')" id="nav-12-2" class="hover:text-amber-300 transition-all py-2 opacity-80 hover:opacity-100">2부: 과학적 증거</button>
+                    <button onclick="showPage('12-3')" id="nav-12-3" class="hover:text-amber-300 transition-all py-2 opacity-80 hover:opacity-100">3부: 양자적 삶</button>
+                    <button onclick="showPage('12-4')" id="nav-12-4" class="hover:text-amber-300 transition-all py-2 opacity-80 hover:opacity-100">4부: 선과 악</button>
+                    <button onclick="showPage('12-5')" id="nav-12-5" class="hover:text-amber-300 transition-all py-2 opacity-80 hover:opacity-100">5부: 실천</button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="lg:hidden flex items-center">
+                    <button onclick="toggleMobileMenu()" class="text-slate-300 hover:text-amber-400 focus:outline-none transition">
+                        <i class="fa-solid fa-bars-staggered text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-slate-900 border-t border-slate-800 absolute w-full left-0 z-50">
+            <a href="#" onclick="showPage('12-1'); toggleMobileMenu()" class="block py-4 px-6 hover:bg-slate-800 border-b border-slate-800/50 text-slate-300">1부: 과학적 증거</a>
+            <a href="#" onclick="showPage('12-2'); toggleMobileMenu()" class="block py-4 px-6 hover:bg-slate-800 border-b border-slate-800/50 text-slate-300">2부: 신의 존재 증거</a>
+            <a href="#" onclick="showPage('12-3'); toggleMobileMenu()" class="block py-4 px-6 hover:bg-slate-800 border-b border-slate-800/50 text-slate-300">3부: 양자적 삶</a>
+            <a href="#" onclick="showPage('12-4'); toggleMobileMenu()" class="block py-4 px-6 hover:bg-slate-800 border-b border-slate-800/50 text-slate-300">4부: 신과 선과 악</a>
+            <a href="#" onclick="showPage('12-5'); toggleMobileMenu()" class="block py-4 px-6 hover:bg-slate-800 text-slate-300">5부: 영적 실천</a>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow container mx-auto px-4 py-12 relative max-w-5xl">
+        
+        <!-- Background Art (Dynamic Orbs) -->
+        <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+            <div class="orb bg-violet-900 w-[500px] h-[500px] top-[-100px] left-[-100px]"></div>
+            <div class="orb bg-blue-900 w-[600px] h-[600px] bottom-[-200px] right-[-100px]" style="animation-delay: -5s;"></div>
+            <div class="orb bg-amber-700 w-[300px] h-[300px] top-[40%] left-[60%] opacity-20" style="animation-duration: 20s;"></div>
+        </div>
+
+        <!-- PAGE: HOME (Intro) -->
+        <section id="home" class="page-section fade-in">
+            <div class="text-center py-10 lg:py-20">
+                <div class="mb-6 inline-flex items-center justify-center w-24 h-24 rounded-full bg-slate-800/80 border border-slate-700 shadow-xl shadow-amber-900/10">
+                    <i class="fa-solid fa-book-journal-whills text-5xl text-amber-500"></i>
+                </div>
+                
+                <h1 class="text-5xl lg:text-7xl font-bold mb-6 tracking-tight">
+                    <span class="block text-slate-100 mb-2">신은</span>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-amber-500 to-amber-600">죽지 않았다</span>
+                </h1>
+                
+                <p class="text-xl lg:text-2xl text-slate-400 serif italic max-w-3xl mx-auto mb-12">
+                    "물질적 리얼리즘의 한계를 넘어,<br>양자 물리학이 밝혀낸 의식의 과학적 증명"
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-left mb-16">
+                    <div class="concept-card p-8 rounded-2xl">
+                        <h3 class="text-xl font-bold text-amber-400 mb-4 flex items-center">
+                            <i class="fa-solid fa-triangle-exclamation mr-3"></i>현대의 위기
+                        </h3>
+                        <p class="text-slate-300">
+                            현대 과학은 "모든 것은 물질이다"라는 유물론적 신념에 빠져 있습니다. 이는 인간을 의미 없는 기계적 존재로 전락시켰고, 윤리와 가치의 붕괴를 가져왔습니다. 니체가 선언한 '신의 죽음'은 사실 '의미의 죽음'이었습니다.
+                        </p>
+                    </div>
+                    <div class="concept-card p-8 rounded-2xl">
+                        <h3 class="text-xl font-bold text-blue-400 mb-4 flex items-center">
+                            <i class="fa-solid fa-atom mr-3"></i>양자적 해법
+                        </h3>
+                        <p class="text-slate-300">
+                            아미트 고스와미는 양자 물리학의 최신 발견들을 통해 신(God)이 단순한 믿음의 대상이 아니라, 과학적 관찰과 논리로 설명 가능한 '근원적 의식'임을 증명합니다. 과학과 종교는 다시 하나가 될 수 있습니다.
+                        </p>
+                    </div>
+                </div>
+                
+                <button onclick="showPage('12-1')" class="group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-md bg-amber-600 px-8 font-medium text-white transition-all duration-300 hover:bg-amber-700 hover:w-56 w-48 shadow-lg shadow-amber-600/30">
+                    <span class="mr-2">탐험 시작하기</span>
+                    <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-1"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- PAGE: 12-1 (Part 1 - Prologue & Ch 1-4) -->
+        <section id="12-1" class="page-section hidden fade-in">
+            <div class="border-b border-slate-800 pb-8 mb-10">
+                <span class="text-blue-500 font-bold tracking-widest text-sm uppercase mb-2 block">Prologue & Part 1 </span>
+                <h2 class="text-3xl lg:text-5xl font-bold text-slate-100">과학적 증거: 유물론의 종말</h2>
+                <p class="text-lg text-blue-500/80 font-serif italic mt-4">
+                    "물질이 의식을 만드는 것이 아니라, 의식이 물질을 만든다."
+                </p>
+            </div>
+
+            <div class="space-y-16">
+                <!-- Prologue -->
+                <div>
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="bg-slate-700 p-2 px-3 rounded text-slate-300 font-bold text-sm">Prologue</div>
+                        <h3 class="text-2xl font-bold text-white">회의론자들을 위하여</h3>
+                    </div>
+                    <div class="bg-slate-900/50 p-6 rounded-xl border border-slate-800 mb-6">
+                        <p class="text-slate-300 mb-4 leading-relaxed">
+                            이 책은 단순한 신앙 서적이 아닙니다. 주류 과학계와 무신론자들에게 던지는 이론 물리학자의 도전장입니다. 
+                            니체의 "신은 죽었다"는 선언을 넘어, 최첨단 <strong>양자물리학</strong>이 어떻게 신의 존재를 증명하는지 논합니다.
+                        </p>
+                    </div>
+                    <div class="discussion-box">
+                        <div class="discussion-title"><i class="fa-regular fa-comments mr-2"></i> 심층 토론</div>
+                        <ul class="space-y-3 text-slate-300 text-sm">
+                            <li class="flex items-start"><i class="fa-solid fa-circle-question text-blue-400 mt-1 mr-3 text-xs"></i><span>우리는 과학이 '신'을 죽였다고 생각하나요, 아니면 과학이 아직 '의식'의 영역을 다루지 못했던 것뿐일까요?</span></li>
+                            <li class="flex items-start"><i class="fa-solid fa-circle-question text-blue-400 mt-1 mr-3 text-xs"></i><span>"의식이 뇌의 부산물이 아니라, 뇌가 의식의 도구"라는 주장을 받아들인다면, 삶을 대하는 태도는 어떻게 달라질까요?</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Ch 1 -->
+                <div>
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="bg-blue-900/30 p-2 px-3 rounded text-blue-400 font-bold text-xl">Ch. 1</div>
+                        <h3 class="text-2xl font-bold text-white">신(God)에 관한 과학적 재발견</h3>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div class="bg-slate-800 p-5 rounded-xl border border-slate-700 opacity-80">
+                            <h4 class="text-slate-400 font-bold mb-2 text-sm"><i class="fa-solid fa-arrow-up mr-2"></i>상향 인과 (Upward Causation)</h4>
+                            <p class="text-xs text-slate-400">물질(원자)이 의식을 만든다는 고전 물리학의 믿음. 인간의 자유의지나 창의성을 설명하지 못함.</p>
+                        </div>
+                        <div class="bg-slate-800 p-5 rounded-xl border border-blue-500 shadow-lg shadow-blue-900/20">
+                            <h4 class="text-blue-400 font-bold mb-2 text-sm"><i class="fa-solid fa-arrow-down mr-2"></i>하향 인과 (Downward Causation)</h4>
+                            <p class="text-xs text-slate-300">비국소적 의식이 파동을 붕괴시켜 현실을 만듦. 의식이 물질에 선행한다는 우주의 근본 원리.</p>
+                        </div>
+                    </div>
+                    <div class="discussion-box">
+                        <div class="discussion-title"><i class="fa-regular fa-comments mr-2"></i> 심층 토론</div>
+                        <ul class="space-y-3 text-slate-300 text-sm">
+                            <li class="flex items-start"><i class="fa-solid fa-circle-question text-blue-400 mt-1 mr-3 text-xs"></i><span>나의 생각이나 의지가 실제로 물리적 현실을 변화시킨 경험이 있나요?</span></li>
+                            <li class="flex items-start"><i class="fa-solid fa-circle-question text-blue-400 mt-1 mr-3 text-xs"></i><span>만약 세상이 기계적인 법칙으로만 돌아간다면, 인간의 '자유의지'는 환상에 불과할까요?</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Ch 2 -->
+                <div>
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="bg-blue-900/30 p-2 px-3 rounded text-blue-400 font-bold text-xl">Ch. 2</div>
+                        <h3 class="text-2xl font-bold text-white">종교의 세 가지 원리</h3>
+                    </div>
+                    <div class="bg-slate-900/50 p-6 rounded-xl border border-slate-800 mb-6">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                            <div class="p-4 rounded bg-slate-800/50">
+                                <i class="fa-solid fa-cloud-moon text-blue-400 text-2xl mb-2"></i>
+                                <div class="text-sm font-bold text-slate-200">초월적 영역</div>
+                            </div>
+                            <div class="p-4 rounded bg-slate-800/50">
+                                <i class="fa-solid fa-person-rays text-blue-400 text-2xl mb-2"></i>
+                                <div class="text-sm font-bold text-slate-200">미세 신체</div>
+                                <div class="text-xs text-slate-500">생명 에너지 & 정신체</div>
+                            </div>
+                            <div class="p-4 rounded bg-slate-800/50">
+                                <i class="fa-solid fa-bullseye text-blue-400 text-2xl mb-2"></i>
+                                <div class="text-sm font-bold text-slate-200">목적성 (Teleology)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ch 3 -->
+                <div>
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="bg-blue-900/30 p-2 px-3 rounded text-blue-400 font-bold text-xl">Ch. 3</div>
+                        <h3 class="text-2xl font-bold text-white">철학의 간략한 역사</h3>
+                    </div>
+                    <div class="concept-card p-6 rounded-xl mb-6">
+                        <ul class="space-y-4">
+                            <li>
+                                <span class="text-slate-400 text-xs uppercase font-bold tracking-wider block mb-1">Step 1</span>
+                                <strong class="text-white">이원론 (Dualism):</strong> 정신과 물질의 분리. 과학이 물질만 다루게 됨.
+                            </li>
+                            <li>
+                                <span class="text-slate-400 text-xs uppercase font-bold tracking-wider block mb-1">Step 2</span>
+                                <strong class="text-white">유물론적 일원론:</strong> "모든 것은 물질이다". 신은 불필요.
+                            </li>
+                            <li>
+                                <span class="text-blue-400 text-xs uppercase font-bold tracking-wider block mb-1">Final Step (Quantum)</span>
+                                <strong class="text-white">관념론적 일원론:</strong> "의식이 근원이다". 과학과 영성의 통합.
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="discussion-box">
+                        <div class="discussion-title"><i class="fa-regular fa-comments mr-2"></i> 심층 토론</div>
+                        <ul class="space-y-3 text-slate-300 text-sm">
+                            <li class="flex items-start"><i class="fa-solid fa-circle-question text-blue-400 mt-1 mr-3 text-xs"></i><span>우리는 알게 모르게 "눈에 보이는 것만이 진짜"라는 유물론적 사고방식에 지배당하고 있지 않은가요?</span></li>
+                            <li class="flex items-start"><i class="fa-solid fa-circle-question text-blue-400 mt-1 mr-3 text-xs"></i><span>정신과 물질이 하나로 연결되어 있다면, 나의 내면 변화가 세상에 어떤 영향을 줄 수 있을까요?</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Ch 4 -->
+                <div>
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="bg-blue-900/30 p-2 px-3 rounded text-blue-400 font-bold text-xl">Ch. 4</div>
+                        <h3 class="text-2xl font-bold text-white">신과 세상</h3>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div class="concept-card p-6 rounded-xl">
+                            <h5 class="text-blue-400 font-bold mb-2">초월적이면서 내재적</h5>
+                            <p class="text-sm text-slate-300">신은 세상 밖에만 있지도, 세상 그 자체만도 아닙니다. 만물 속에 내재하면서 동시에 초월해 있습니다 (범재신론).</p>
+                        </div>
+                        <div class="concept-card p-6 rounded-xl">
+                            <h5 class="text-blue-400 font-bold mb-2">공동 창조자</h5>
+                            <p class="text-sm text-slate-300">인간은 신의 피조물이자, 관찰을 통해 현실을 확정 짓는 '공동 창조자'입니다. 우리는 의식의 바다에 연결된 파도입니다.</p>
+                        </div>
+                    </div>
+                    <div class="discussion-box">
+                        <div class="discussion-title"><i class="fa-regular fa-comments mr-2"></i> 심층 토론</div>
+                        <ul class="space-y-3 text-slate-300 text-sm">
+                            <li class="flex items-start"><i class="fa-solid fa-circle-question text-blue-400 mt-1 mr-3 text-xs"></i><span>"신이 내 안에 있고, 내가 신 안에 있다"는 말은 양자물리학적으로 어떻게 해석될 수 있을까요?</span></li>
+                            <li class="flex items-start"><i class="fa-solid fa-circle-question text-blue-400 mt-1 mr-3 text-xs"></i><span>우리가 '공동 창조자'라면, 현재 우리가 겪는 사회적 문제들에 대해 어떤 책임을 가질까요?</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nav buttons -->
+            <div class="flex justify-between mt-16 pt-8 border-t border-slate-800/50">
+                <button onclick="showPage('home')" class="text-slate-400 hover:text-white flex items-center gap-2 transition"><i class="fa-solid fa-arrow-left"></i> 홈으로</button>
+                <button onclick="showPage('12-2')" class="bg-slate-800 hover:bg-slate-700 text-blue-400 hover:text-blue-300 px-6 py-3 rounded-lg flex items-center gap-2 transition border border-slate-700">2부: 과학적 증거 <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+        </section>
+
+        <!-- PAGE: 12-2 (Part 2 - Evidence for God) -->
+        <section id="12-2" class="page-section hidden fade-in">
+            <div class="border-b border-slate-800 pb-8 mb-10">
+                <span class="text-purple-500 font-bold tracking-widest text-sm uppercase mb-2 block">Part 2</span>
+                <h2 class="text-3xl lg:text-5xl font-bold text-slate-100">신의 존재에 대한 과학적 증거</h2>
+                <p class="text-lg text-purple-500/80 font-serif italic mt-4">
+                    "물리학, 생물학, 심리학이 말하는 의식의 개입"
+                </p>
+            </div>
+
+            <div class="space-y-16">
+                <!-- Intro -->
+                <div>
+                    <p class="text-xl text-slate-300 leading-relaxed">
+                        제2부에서 저자는 "신이 존재한다면, 그 증거는 과학적 데이터 안에 있어야 한다"고 주장합니다. 
+                        그는 <strong>양자물리학(물질), 생물학(생명), 심리학(마음)</strong>의 영역에서 발견되는 '설명할 수 없는 구멍(Gaps)'들을 지적하며, 
+                        이를 채우는 유일한 열쇠가 바로 <strong class="text-purple-400">비물질적 개입(신)</strong>임을 증명합니다.
+                    </p>
+                </div>
+
+                <!-- Ch 5 -->
+                <div>
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="bg-purple-900/30 p-2 px-3 rounded text-purple-400 font-bold text-xl">Ch. 5</div>
+                        <h3 class="text-2xl font-bold text-white">양자 측정의 역설과 신의 필요성</h3>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6">
+                        <div class="bg-slate-800 p-6 rounded-xl border-l-4 border-purple-500">
+                            <h4 class="text-white font-bold mb-3"><i class="fa-solid fa-eye text-purple-400 mr-2"></i>관찰자 효과</h4>
+                            <p class="text-sm text-slate-300">
+                                우주는 관찰되기 전까지 파동(가능성)으로만 존재합니다. 그렇다면 최초의 생명체가 등장하기 전, 우주는 어떻게 존재할 수 있었을까요?
+                            </p>
+                        </div>
+                        <div class="bg-slate-800 p-6 rounded-xl border-l-4 border-purple-500">
+                            <h4 class="text-white font-bold mb-3"><i class="fa-solid fa-infinity text-purple-400 mr-2"></i>유물론의 딜레마</h4>
+                            <p class="text-sm text-slate-300">
+                                유물론: 뇌(물질) → 의식.<br>
+                                양자역학: 의식 → 뇌(물질).<br>
+                                이 닭과 달걀의 순환 오류를 해결하는 유일한 답은 시공간을 초월한 <strong>'우주적 관찰자(신)'</strong>입니다.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="discussion-box">
+                        <div class="discussion-title"><i class="fa-regular fa-comments mr-2"></i> 심층 토론</div>
+                        <ul class="space-y-3 text-slate-300 text-sm">
+                            <li class="flex items-start"><i class="fa-solid fa-circle-question text-purple-400 mt-1 mr-3 text-xs"></i><span>"보지 않으면 존재하지 않는다"는 양자역학의 명제를 일상생활에서 느껴본 적이 있나요? (내 인지 밖의 세상)</span></li>
+                            <li class="flex items-start"><i class="fa-solid fa-circle-question text-purple-400 mt-1 mr-3 text-xs"></i><span>인간 관찰자가 없던 태초의 우주를 '누군가' 지켜보고 있었다면, 그 존재는 어떤 형태였을까요?</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Ch 6 -->
+                <div>
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="bg-purple-900/30 p-2 px-3 rounded text-purple-400 font-bold text-xl">Ch. 6</div>
+                        <h3 class="text-2xl font-bold text-white">생물학적 진화 - 우연인가, 의도인가?</h3>
+                    </div>
+                    
+                    <div class="flex flex-col md:flex-row gap-6 mb-6">
+                        <div class="flex-1 concept-card p-6 rounded-xl">
+                            <h5 class="text-slate-400 text-xs font-bold uppercase mb-2">Old View</h5>
+                            <h4 class="text-white font-bold mb-2">다윈의 진화론</h4>
+                            <p class="text-sm text-slate-400">무작위 돌연변이와 자연선택에 의한 점진적 변화. 화석 기록의 급격한 변화(단속 평형)를 설명하지 못함.</p>
+                        </div>
+                        <div class="flex-1 concept-card p-6 rounded-xl border border-purple-500/50 shadow-lg shadow-purple-900/10">
+                            <h5 class="text-purple-400 text-xs font-bold uppercase mb-2">Quantum View</h5>
+                            <h4 class="text-white font-bold mb-2">양자 진화</h4>
+                            <p class="text-sm text-slate-300">진화는 기계적 과정이 아니라 '의식의 선택'이 개입된 양자 도약입니다. 의식이 더 복잡한 표현을 위해 생명을 이끕니다(목적론).</p>
+                        </div>
+                    </div>
+
+                    <div class="discussion-box">
+                        <div class="discussion-title"><i class="fa-regular fa-comments mr-2"></i> 심층 토론</div>
+                        <ul class="space-y-3 text-slate-300 text-sm">
+                            <li class="flex items-start"><i class="fa-solid fa-circle-question text-purple-400 mt-1 mr-3 text-xs"></i><span>생명체의 눈이나 뇌처럼 복잡한 기관이 정말 수많은 '우연'의 축적만으로 만들어질 수 있다고 믿으시나요?</span></li>
+                            <li class="flex items-start"><i class="fa-solid fa-circle-question text-purple-400 mt-1 mr-3 text-xs"></i><span>진화의 목적이 '생존'이 아니라 '의식의 확장'이라면, 인류의 다음 진화 단계는 어떤 모습일까요?</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Ch 7 -->
+                <div>
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="bg-purple-900/30 p-2 px-3 rounded text-purple-400 font-bold text-xl">Ch. 7</div>
+                        <h3 class="text-2xl font-bold text-white">마음의 신비와 창의성</h3>
+                    </div>
+
+                    <div class="bg-slate-900/50 p-6 rounded-xl border border-slate-800 mb-6 relative overflow-hidden">
+                        <i class="fa-regular fa-lightbulb text-6xl text-yellow-500/10 absolute top-4 right-4"></i>
+                        <h4 class="text-white font-bold mb-3">인간 vs 컴퓨터</h4>
+                        <p class="text-slate-300 text-sm mb-4">
+                            기계(컴퓨터)는 입력된 알고리즘 내에서만 결과를 냅니다. 하지만 인간은 <strong>'전혀 새로운 것'</strong>을 창조합니다.
+                        </p>
+                        <h4 class="text-white font-bold mb-3">양자 도약과 자유의지</h4>
+                        <p class="text-slate-300 text-sm">
+                            창의적 영감은 단계적 사고가 아닌 불연속적인 '아하!' 순간(양자 도약)에 옵니다. 이는 우리가 과거의 습관(기계적 조건)을 넘어 새로운 가능성을 선택할 수 있는 <strong>자유의지</strong>를 가졌다는 증거입니다.
+                        </p>
+                    </div>
+
+                    <div class="discussion-box">
+                        <div class="discussion-title"><i class="fa-regular fa-comments mr-2"></i> 심층 토론</div>
+                        <ul class="space-y-3 text-slate-300 text-sm">
+                            <li class="flex items-start"><i class="fa-solid fa-circle-question text-purple-400 mt-1 mr-3 text-xs"></i><span>인생에서 논리적으로 설명할 수 없는 직관이나 영감을 통해 문제를 해결한 경험이 있나요?</span></li>
+                            <li class="flex items-start"><i class="fa-solid fa-circle-question text-purple-400 mt-1 mr-3 text-xs"></i><span>AI(인공지능)가 발달해도 인간의 '창의성'을 완전히 대체할 수 없다고 주장한다면, 그 근거는 무엇일까요?</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Ch 8 -->
+                <div>
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="bg-purple-900/30 p-2 px-3 rounded text-purple-400 font-bold text-xl">Ch. 8</div>
+                        <h3 class="text-2xl font-bold text-white">초감각적 현상과 비국소성 (심령과학)</h3>
+                    </div>
+
+                    <div class="concept-card p-6 rounded-xl mb-6 flex items-center gap-6">
+                        <div class="text-4xl text-purple-500"><i class="fa-solid fa-tower-broadcast"></i></div>
+                        <div>
+                            <h4 class="text-white font-bold mb-2">하나의 마음 (One Mind)</h4>
+                            <p class="text-sm text-slate-300">
+                                양자 얽힘(비국소성)은 멀리 떨어진 입자들이 즉각적으로 소통함을 보여줍니다. 
+                                이를 의식에 적용하면 텔레파시나 투시 같은 초감각적 지각(ESP)이 설명됩니다. 
+                                우리는 개별적인 존재처럼 보이지만, 깊은 차원에서는 <strong>하나로 연결된 거대한 의식망</strong>입니다.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="discussion-box">
+                        <div class="discussion-title"><i class="fa-regular fa-comments mr-2"></i> 심층 토론</div>
+                        <ul class="space-y-3 text-slate-300 text-sm">
+                            <li class="flex items-start"><i class="fa-solid fa-circle-question text-purple-400 mt-1 mr-3 text-xs"></i><span>누군가를 간절히 생각했을 때 그 사람에게 연락이 온다거나, 말하지 않아도 통했던 경험이 있나요?</span></li>
+                            <li class="flex items-start"><i class="fa-solid fa-circle-question text-purple-400 mt-1 mr-3 text-xs"></i><span>"너와 나는 연결되어 있다"는 사실이 과학적 진실이라면, 우리는 타인을 대하는 태도를 어떻게 바꿔야 할까요?</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Nav buttons -->
+            <div class="flex justify-between mt-16 pt-8 border-t border-slate-800/50">
+                <button onclick="showPage('12-1')" class="text-slate-400 hover:text-white flex items-center gap-2 transition"><i class="fa-solid fa-arrow-left"></i> 1부로 이동</button>
+                <button onclick="showPage('12-3')" class="bg-slate-800 hover:bg-slate-700 text-purple-400 hover:text-purple-300 px-6 py-3 rounded-lg flex items-center gap-2 transition border border-slate-700">3부: 양자적 삶 <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+        </section>
+
+        <!-- PAGE: 12-3 (Part 3) -->
+        <section id="12-3" class="page-section hidden fade-in">
+            <div class="border-b border-slate-800 pb-8 mb-10">
+                <span class="text-pink-500 font-bold tracking-widest text-sm uppercase mb-2 block">Part 3</span>
+                <h2 class="text-3xl lg:text-5xl font-bold text-slate-100">신과 함께하는 삶의 실천</h2>
+                <p class="text-lg text-pink-500/80 font-serif italic mt-4">
+                    "치유, 행복, 그리고 영원한 삶"
+                </p>
+            </div>
+
+            <div class="space-y-16">
+                <!-- Intro -->
+                <div>
+                    <p class="text-xl text-slate-300 leading-relaxed">
+                        제3부는 '양자 활동가(Quantum Activist)'로서 살아가는 방법을 제시합니다. 
+                        저자는 우리가 단순히 육체를 가진 기계가 아니라, 의식을 통해 몸과 마음을 다스릴 수 있는 영적인 존재임을 자각할 때 진정한 <strong class="text-pink-400">치유와 행복</strong>이 가능하다고 설파합니다.
+                    </p>
+                </div>
+
+                <!-- Ch 9 -->
+                <div>
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="bg-pink-900/30 p-2 px-3 rounded text-pink-400 font-bold text-xl">Ch. 9</div>
+                        <h3 class="text-2xl font-bold text-white">양자 치유 - 의식이 몸을 고친다</h3>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div class="bg-slate-800 p-6 rounded-xl opacity-70 border border-slate-700">
+                            <h4 class="text-slate-400 font-bold mb-3"><i class="fa-solid fa-pills mr-2"></i>기계론적 의학</h4>
+                            <p class="text-sm text-slate-400">몸을 고장 난 기계로 봅니다. 약물과 수술로 증상은 없앨 수 있지만, 마음이나 생명 에너지의 불균형인 근본 원인은 해결하지 못합니다.</p>
+                        </div>
+                        <div class="bg-slate-800 p-6 rounded-xl border border-pink-500 shadow-lg shadow-pink-900/20">
+                            <h4 class="text-pink-400 font-bold mb-3"><i class="fa-solid fa-heart-pulse mr-2"></i>양자 치유</h4>
+                            <p class="text-sm text-slate-300"><strong>"의식이 물질(몸)을 통제한다"</strong>는 하향 인과를 적용합니다. 긍정적 생각과 명상은 실제 생체 분자를 바꾸는 양자적 개입입니다.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="concept-card p-6 rounded-xl mb-6">
+                        <h5 class="text-white font-bold mb-2">창의적 치유와 플라시보</h5>
+                        <p class="text-sm text-slate-300">
+                            만성 질환은 조건화된 습관을 깨는 '창의적 도약'이 필요합니다. 의식이 새로운 건강의 가능성을 선택할 때 면역 체계는 기적적으로 되살아납니다.
+                        </p>
+                    </div>
+
+                    <div class="discussion-box">
+                        <div class="discussion-title"><i class="fa-regular fa-comments mr-2"></i> 심층 토론</div>
+                        <ul class="space-y-3 text-slate-300 text-sm">
+                            <li class="flex items-start"><i class="fa-solid fa-circle-question text-pink-400 mt-1 mr-3 text-xs"></i><span>현대 의학의 치료(수술, 약물)와 양자 치유(명상, 마음가짐)는 서로 배타적인가요, 아니면 상호 보완적인가요?</span></li>
+                            <li class="flex items-start"><i class="fa-solid fa-circle-question text-pink-400 mt-1 mr-3 text-xs"></i><span>"병은 마음에서 온다"는 말을 과학적으로 신뢰하시나요? 스트레스가 실제로 내 몸을 아프게 했던 구체적 경험이 있나요?</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Ch 10 -->
+                <div>
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="bg-pink-900/30 p-2 px-3 rounded text-pink-400 font-bold text-xl">Ch. 10</div>
+                        <h3 class="text-2xl font-bold text-white">양자 행복 - 쾌락을 넘어선 기쁨</h3>
+                    </div>
+
+                    <div class="flex flex-col md:flex-row gap-6 mb-6">
+                        <div class="flex-1 bg-slate-900 p-6 rounded-xl border border-slate-800">
+                            <div class="text-center text-4xl mb-4 text-slate-600"><i class="fa-solid fa-candy-cane"></i></div>
+                            <h4 class="text-center text-slate-300 font-bold mb-2">쾌락 (Pleasure)</h4>
+                            <p class="text-center text-xs text-slate-500">외부 자극, 뇌의 화학 작용, 반복될수록 감소, 중독성.</p>
+                        </div>
+                        <div class="flex-1 bg-gradient-to-br from-pink-900/40 to-slate-900 p-6 rounded-xl border border-pink-500/30">
+                            <div class="text-center text-4xl mb-4 text-pink-400"><i class="fa-regular fa-face-smile-beam"></i></div>
+                            <h4 class="text-center text-white font-bold mb-2">행복 (Happiness)</h4>
+                            <p class="text-center text-xs text-slate-300">내면의 충만함, 의식의 확장, 신성과의 연결, 창의적 몰입(Flow).</p>
+                        </div>
+                    </div>
+
+                    <div class="discussion-box">
+                        <div class="discussion-title"><i class="fa-regular fa-comments mr-2"></i> 심층 토론</div>
+                        <ul class="space-y-3 text-slate-300 text-sm">
+                            <li class="flex items-start"><i class="fa-solid fa-circle-question text-pink-400 mt-1 mr-3 text-xs"></i><span>내가 추구하는 행복은 '소비와 소유(쾌락)'에 가까운가요, 아니면 '창조와 몰입(기쁨)'에 가까운가요?</span></li>
+                            <li class="flex items-start"><i class="fa-solid fa-circle-question text-pink-400 mt-1 mr-3 text-xs"></i><span>물질적으로 풍요로워졌음에도 현대인의 우울증이 늘어나는 이유는 무엇일까요?</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Ch 11 -->
+                <div>
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="bg-pink-900/30 p-2 px-3 rounded text-pink-400 font-bold text-xl">Ch. 11</div>
+                        <h3 class="text-2xl font-bold text-white">영적 성장과 죽음, 그리고 환생</h3>
+                    </div>
+
+                    <div class="concept-card p-6 rounded-xl mb-6 relative overflow-hidden">
+                        <div class="absolute right-0 top-0 w-32 h-32 bg-pink-500/10 rounded-full blur-2xl"></div>
+                        <ul class="space-y-4 relative z-10">
+                            <li class="flex items-start">
+                                <i class="fa-solid fa-door-open text-pink-400 mt-1 mr-3"></i>
+                                <div>
+                                    <strong class="text-white block">죽음은 끝이 아니다</strong>
+                                    <span class="text-sm text-slate-400">죽음은 육체라는 국소적 제약에서 벗어나 비국소적 가능성으로 돌아가는 것입니다. 의식은 사라지지 않습니다.</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa-solid fa-arrows-spin text-pink-400 mt-1 mr-3"></i>
+                                <div>
+                                    <strong class="text-white block">양자 모나드와 환생</strong>
+                                    <span class="text-sm text-slate-400">습득한 성향과 카르마는 '양자 기억'으로 남아 다음 생으로 이어집니다. 삶은 신성을 배우기 위한 학교입니다.</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="discussion-box">
+                        <div class="discussion-title"><i class="fa-regular fa-comments mr-2"></i> 심층 토론</div>
+                        <ul class="space-y-3 text-slate-300 text-sm">
+                            <li class="flex items-start"><i class="fa-solid fa-circle-question text-pink-400 mt-1 mr-3 text-xs"></i><span>"이번 생은 배움의 과정"이라는 관점을 받아들인다면, 현재 내가 겪는 고난을 어떻게 바라보게 될까요?</span></li>
+                            <li class="flex items-start"><i class="fa-solid fa-circle-question text-pink-400 mt-1 mr-3 text-xs"></i><span>나의 어떤 성격이나 습관이 전생으로부터 이어져 온 것이라고 느껴본 적이 있나요?</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-between mt-16 pt-8 border-t border-slate-800/50">
+                <button onclick="showPage('12-2')" class="text-slate-400 hover:text-white flex items-center gap-2 transition"><i class="fa-solid fa-arrow-left"></i> 2부로 이동</button>
+                <button onclick="showPage('12-4')" class="bg-slate-800 hover:bg-slate-700 text-pink-400 hover:text-pink-300 px-6 py-3 rounded-lg flex items-center gap-2 transition border border-slate-700">4부: 선과 악 <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+        </section>
+
+        <!-- PAGE: 12-4 (Part 4) - UPDATED -->
+        <section id="12-4" class="page-section hidden fade-in">
+            <div class="border-b border-slate-800 pb-8 mb-10">
+                <span class="text-teal-500 font-bold tracking-widest text-sm uppercase mb-2 block">Part 4</span>
+                <h2 class="text-3xl lg:text-5xl font-bold text-slate-100">신과 선과 악: 도덕의 재발견</h2>
+                <p class="text-lg text-teal-500/80 font-serif italic mt-4">
+                    "왜 선한 신이 만든 세상에 악이 존재하는가?"
+                </p>
+            </div>
+
+            <div class="space-y-16">
+                <!-- Intro -->
+                <div>
+                    <p class="text-xl text-slate-300 leading-relaxed">
+                        제4부는 윤리와 도덕의 문제를 다룹니다. 저자는 선과 악을 단순한 종교적 계율이나 사회적 약속이 아닌, <strong class="text-teal-400">의식 진화의 필수적인 과정</strong>으로 설명합니다. 우리가 왜 타인에게 선하게 대해야 하는지, 그리고 세상의 악을 어떻게 바라보아야 하는지에 대한 양자물리학적 기준을 제시합니다.
+                    </p>
+                </div>
+
+                <!-- Chapter 12 -->
+                <div>
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="bg-red-900/30 p-3 rounded-lg text-red-400 font-bold text-xl">Ch. 12</div>
+                        <h3 class="text-2xl lg:text-3xl font-bold text-white">악의 문제 - 왜 신은 악을 허용하는가?</h3>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                        <div class="bg-slate-900/80 p-6 rounded-xl border border-red-900/40 relative overflow-hidden">
+                             <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-red-600/10 rounded-full blur-3xl"></div>
+                            <h4 class="text-lg font-bold text-red-300 mb-3"><i class="fa-solid fa-user-secret mr-2"></i>악의 기원과 필요성</h4>
+                            <p class="text-slate-400 text-sm leading-relaxed">
+                                악은 신의 실수나 대립되는 존재(사탄)가 아니라, <strong>'창조성을 위한 필연적 부산물'</strong>입니다. 빛을 알기 위해 그림자가 필요하듯, 선(통합)을 선택하기 위한 배경으로 존재합니다.
+                            </p>
+                        </div>
+                        <div class="bg-slate-900/80 p-6 rounded-xl border border-slate-700">
+                            <h4 class="text-lg font-bold text-slate-200 mb-3"><i class="fa-solid fa-masks-theater mr-2"></i>분리감과 에고(Ego)</h4>
+                            <p class="text-slate-400 text-sm leading-relaxed">
+                                신(전체 의식)이 세상을 경험하기 위해 '나'라는 에고로 나뉘면서 분리감이 생깁니다. 이 분리감이 강해져 오직 나의 생존과 이익만을 추구할 때, 그것이 곧 '악'이 됩니다.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="concept-card p-6 rounded-xl border-l-4 border-red-500">
+                        <h5 class="text-white font-bold mb-2">선택의 자유</h5>
+                        <p class="text-slate-300 text-sm">
+                            진정한 사랑은 강요가 아닌 '선택'입니다. 악(분리)이라는 선택지가 없다면, 선(통합)을 선택하는 자유의지도 존재할 수 없습니다.
+                        </p>
+                    </div>
+
+                    <div class="discussion-box">
+                        <div class="discussion-title"><i class="fa-regular fa-comments mr-2"></i> 심층 토론</div>
+                        <ul class="space-y-3 text-slate-300 text-sm">
+                            <li class="flex items-start"><i class="fa-solid fa-circle-question text-teal-400 mt-1 mr-3 text-xs"></i><span>"악이 없으면 선도 존재할 수 없다"는 말에 동의하시나요? 빛을 알기 위해 반드시 어둠이 필요한 것일까요?</span></li>
+                            <li class="flex items-start"><i class="fa-solid fa-circle-question text-teal-400 mt-1 mr-3 text-xs"></i><span>내 안의 이기심이나 질투(작은 악)가 일어날 때, 그것을 억누르는 편인가요 아니면 그것을 통해 무언가를 배우려 하나요?</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Chapter 13 -->
+                <div>
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="bg-teal-900/30 p-3 rounded-lg text-teal-400 font-bold text-xl">Ch. 13</div>
+                        <h3 class="text-2xl lg:text-3xl font-bold text-white">양자 윤리 - 우리는 왜 착하게 살아야 하는가?</h3>
+                    </div>
+
+                    <div class="flex flex-col md:flex-row gap-6 mb-8">
+                        <div class="flex-1 bg-slate-800 p-6 rounded-xl border border-slate-700 opacity-70">
+                            <div class="text-slate-400 font-bold mb-2 text-sm uppercase tracking-wider">Old Way</div>
+                            <h4 class="text-xl font-bold text-white mb-2">규율 윤리</h4>
+                            <p class="text-sm text-slate-400">
+                                권위자가 정해놓은 외부 규칙(법, 계율)을 따르는 것. 이는 처벌에 대한 두려움에 기반합니다.
+                            </p>
+                        </div>
+                        <div class="flex items-center justify-center text-teal-500 text-2xl"><i class="fa-solid fa-arrow-right"></i></div>
+                        <div class="flex-1 bg-slate-800 p-6 rounded-xl border border-teal-500 shadow-[0_0_20px_rgba(20,184,166,0.2)]">
+                            <div class="text-teal-400 font-bold mb-2 text-sm uppercase tracking-wider">New Way</div>
+                            <h4 class="text-xl font-bold text-white mb-2">양자 윤리</h4>
+                            <p class="text-sm text-slate-300">
+                                우리 모두가 근원적으로 연결되어 있다는 <strong>'비국소적 연결성'</strong>을 깨닫는 것. 타인은 또 다른 나입니다.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-r from-teal-900/30 to-slate-900 p-6 rounded-lg text-center border-t border-teal-800">
+                        <i class="fa-solid fa-heart-circle-bolt text-3xl text-teal-400 mb-3"></i>
+                        <p class="text-white font-serif text-lg italic">
+                            "네 이웃을 네 몸과 같이 사랑하라"
+                        </p>
+                        <p class="text-xs text-slate-400 mt-2">이것은 종교적 명언이 아니라, 양자역학적 사실입니다.</p>
+                    </div>
+
+                    <div class="discussion-box">
+                        <div class="discussion-title"><i class="fa-regular fa-comments mr-2"></i> 심층 토론</div>
+                        <ul class="space-y-3 text-slate-300 text-sm">
+                            <li class="flex items-start"><i class="fa-solid fa-circle-question text-teal-400 mt-1 mr-3 text-xs"></i><span>만약 법이나 처벌이 전혀 없는 세상이 온다면, 나는 여전히 도덕적으로 행동할까요? 그 이유는 무엇일까요?</span></li>
+                            <li class="flex items-start"><i class="fa-solid fa-circle-question text-teal-400 mt-1 mr-3 text-xs"></i><span>타인의 고통을 보고 마치 내 일처럼 가슴 아팠던(연결감을 느낀) 경험이 있나요?</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Chapter 14 -->
+                <div>
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="bg-violet-900/30 p-3 rounded-lg text-violet-400 font-bold text-xl">Ch. 14</div>
+                        <h3 class="text-2xl lg:text-3xl font-bold text-white">영적 성장의 척도</h3>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div class="concept-card p-5 rounded-xl">
+                            <div class="text-violet-400 text-2xl mb-3"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                            <h5 class="text-white font-bold mb-2">감정의 정화</h5>
+                            <p class="text-xs text-slate-400">부정적 감정(두려움, 분노)을 긍정적 감정(사랑, 자비)으로 변환시키는 연금술 능력.</p>
+                        </div>
+                        <div class="concept-card p-5 rounded-xl">
+                            <div class="text-violet-400 text-2xl mb-3"><i class="fa-solid fa-leaf"></i></div>
+                            <h5 class="text-white font-bold mb-2">단순함의 미학</h5>
+                            <p class="text-xs text-slate-400">물질적 욕망에 휘둘리지 않고 불필요한 것을 걷어내어 본질에 집중하는 에너지 관리.</p>
+                        </div>
+                        <div class="concept-card p-5 rounded-xl">
+                            <div class="text-violet-400 text-2xl mb-3"><i class="fa-solid fa-hands-holding-circle"></i></div>
+                            <h5 class="text-white font-bold mb-2">행동하는 사랑</h5>
+                            <p class="text-xs text-slate-400">깨달음은 산속이 아닌 관계 속에서 증명됩니다. 타인을 대하는 태도가 진정한 척도입니다.</p>
+                        </div>
+                    </div>
+
+                    <div class="discussion-box">
+                        <div class="discussion-title"><i class="fa-regular fa-comments mr-2"></i> 심층 토론</div>
+                        <ul class="space-y-3 text-slate-300 text-sm">
+                            <li class="flex items-start"><i class="fa-solid fa-circle-question text-teal-400 mt-1 mr-3 text-xs"></i><span>나의 영적 성숙도를 점수로 매긴다면 몇 점일까요? (지식이 아닌, 타인을 대하는 태도를 기준으로)</span></li>
+                            <li class="flex items-start"><i class="fa-solid fa-circle-question text-teal-400 mt-1 mr-3 text-xs"></i><span>"단순하게 산다"는 것은 복잡한 현대 사회에서 구체적으로 어떤 라이프스타일을 의미할까요?</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-between mt-16 pt-8 border-t border-slate-800/50">
+                <button onclick="showPage('12-3')" class="text-slate-400 hover:text-white flex items-center gap-2 transition"><i class="fa-solid fa-arrow-left"></i> 3부로 이동</button>
+                <button onclick="showPage('12-5')" class="bg-slate-800 hover:bg-slate-700 text-teal-400 hover:text-teal-300 px-6 py-3 rounded-lg flex items-center gap-2 transition border border-slate-700">5부: 영적 실천 <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+        </section>
+
+        <!-- PAGE: 12-5 (Part 5 - Practice / Conclusion) - UPDATED -->
+        <section id="12-5" class="page-section hidden fade-in">
+            <div class="border-b border-slate-800 pb-8 mb-10">
+                <span class="text-amber-500 font-bold tracking-widest text-sm uppercase mb-2 block">Part 5</span>
+                <h2 class="text-3xl lg:text-5xl font-bold text-slate-100">신의 재발견과 인류의 미래</h2>
+                <p class="text-lg text-amber-500/80 font-serif italic mt-4">
+                    "지식을 넘어선 행동, 퀀텀 액티비스트가 되라"
+                </p>
+            </div>
+
+            <div class="space-y-16">
+                <!-- Intro -->
+                <div>
+                    <p class="text-xl text-slate-300 leading-relaxed">
+                        대장정의 마무리가 되는 제5부는 이 책의 결론이자, 독자들에게 던지는 <strong class="text-amber-400">'행동 강령'</strong>입니다. 
+                        고스와미 박사는 단순히 지적 만족을 위해 이 책을 쓴 것이 아닙니다. 
+                        그는 우리가 과학적으로 재발견된 신(의식)의 개념을 무기로, 위기에 처한 현대 문명을 구원하는 
+                        <span class="text-amber-400 font-bold border-b border-amber-500">양자 활동가(Quantum Activist)</span>가 되기를 촉구합니다.
+                    </p>
+                </div>
+
+                <!-- Chapter 15: Quantum Activism -->
+                <div>
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="bg-amber-900/30 p-3 rounded-lg text-amber-500 font-bold text-xl">Ch. 15</div>
+                        <h3 class="text-2xl lg:text-3xl font-bold text-white">양자 행동주의 (Quantum Activism)</h3>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-slate-900 p-6 rounded-xl border border-red-900/30 opacity-70">
+                            <h4 class="text-red-400 font-bold mb-2"><i class="fa-solid fa-ban mr-2"></i>기존 행동주의</h4>
+                            <p class="text-sm text-slate-400">세상을 '나'와 '적'으로 나누는 이분법. 분노와 투쟁에 기반하며, 이는 또 다른 갈등을 낳습니다.</p>
+                        </div>
+                        <div class="bg-slate-800 p-6 rounded-xl border border-green-500 shadow-lg shadow-green-900/20">
+                            <h4 class="text-green-400 font-bold mb-2"><i class="fa-solid fa-seedling mr-2"></i>양자 행동주의</h4>
+                            <p class="text-sm text-slate-300">"나를 바꾸는 것이 세상을 바꾸는 것이다." 비국소적 연결성을 회복하여 의식의 장(Field) 자체를 변화시킵니다.</p>
+                        </div>
+                    </div>
+
+                    <h4 class="text-lg font-bold text-white mb-4 pl-2 border-l-4 border-amber-500">3가지 실천 강령</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="concept-card p-6 rounded-2xl">
+                            <div class="text-amber-500 text-2xl mb-3"><i class="fa-solid fa-brain"></i></div>
+                            <h5 class="text-lg font-bold text-white mb-2">바르게 생각하기</h5>
+                            <p class="text-sm text-slate-400">유물론적 분리 사고를 버리고, "모든 것은 연결되어 있다"는 양자 세계관을 확립하십시오.</p>
+                        </div>
+                        <div class="concept-card p-6 rounded-2xl">
+                            <div class="text-amber-500 text-2xl mb-3"><i class="fa-solid fa-spa"></i></div>
+                            <h5 class="text-lg font-bold text-white mb-2">바르게 살기</h5>
+                            <p class="text-sm text-slate-400">명상과 수행을 통해 내면의 신성과 접속하고, 일상에서 창의성을 발휘하십시오.</p>
+                        </div>
+                        <div class="concept-card p-6 rounded-2xl">
+                            <div class="text-amber-500 text-2xl mb-3"><i class="fa-solid fa-hand-holding-heart"></i></div>
+                            <h5 class="text-lg font-bold text-white mb-2">바르게 행동하기</h5>
+                            <p class="text-sm text-slate-400">내면의 변화를 바탕으로 환경, 경제, 정치 문제에 '사랑과 통합'의 가치로 참여하십시오.</p>
+                        </div>
+                    </div>
+
+                    <div class="discussion-box">
+                        <div class="discussion-title"><i class="fa-regular fa-comments mr-2"></i> 심층 토론</div>
+                        <ul class="space-y-3 text-slate-300 text-sm">
+                            <li class="flex items-start"><i class="fa-solid fa-circle-question text-violet-400 mt-1 mr-3 text-xs"></i><span>"세상을 바꾸고 싶다면 먼저 네 자신이 변하라"는 간디의 말이 양자물리학적으로는 어떤 의미일까요?</span></li>
+                            <li class="flex items-start"><i class="fa-solid fa-circle-question text-violet-400 mt-1 mr-3 text-xs"></i><span>내가 사회 문제에 참여하는 방식은 '분노'에 기반합니까, 아니면 '연결과 사랑'에 기반합니까?</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Chapter 16: Science & Religion -->
+                <div>
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="bg-blue-900/30 p-3 rounded-lg text-blue-400 font-bold text-xl">Ch. 16</div>
+                        <h3 class="text-2xl lg:text-3xl font-bold text-white">과학과 종교의 위대한 통합</h3>
+                    </div>
+                    
+                    <div class="bg-slate-900/50 rounded-xl p-8 border border-slate-800">
+                        <p class="text-slate-300 mb-6">
+                            지난 수백 년간 과학(사실)과 종교(가치)는 서로를 부정하며 싸워왔습니다. 하지만 양자물리학은 <strong>'의식'</strong>을 매개로 이 둘을 완벽하게 통합합니다.
+                        </p>
+                        <div class="flex flex-col md:flex-row gap-4 items-center justify-center text-center">
+                            <div class="bg-slate-800 px-6 py-4 rounded-lg w-full">
+                                <span class="block text-blue-400 font-bold mb-1">과학 (Science)</span>
+                                <span class="text-xs text-slate-400">기술과 도구 제공</span>
+                            </div>
+                            <i class="fa-solid fa-plus text-slate-500"></i>
+                            <div class="bg-slate-800 px-6 py-4 rounded-lg w-full">
+                                <span class="block text-purple-400 font-bold mb-1">종교 (Religion)</span>
+                                <span class="text-xs text-slate-400">지혜와 가치 제공</span>
+                            </div>
+                            <i class="fa-solid fa-equals text-slate-500"></i>
+                            <div class="bg-gradient-to-r from-blue-900 to-purple-900 px-6 py-4 rounded-lg w-full border border-slate-600">
+                                <span class="block text-white font-bold mb-1">영적 과학</span>
+                                <span class="text-xs text-slate-300">폭주하는 물질문명의 브레이크</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="discussion-box">
+                        <div class="discussion-title"><i class="fa-regular fa-comments mr-2"></i> 심층 토론</div>
+                        <ul class="space-y-3 text-slate-300 text-sm">
+                            <li class="flex items-start"><i class="fa-solid fa-circle-question text-violet-400 mt-1 mr-3 text-xs"></i><span>과학 수업 시간에 '영성'이나 '의식'에 대해 토론하는 미래 학교의 모습을 상상해 본다면?</span></li>
+                            <li class="flex items-start"><i class="fa-solid fa-circle-question text-violet-400 mt-1 mr-3 text-xs"></i><span>과학과 종교가 손을 잡는다면, 기후 위기나 AI 윤리 같은 난제들을 해결하는 데 어떤 도움이 될까요?</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Chapter 17: Evolution -->
+                <div>
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="bg-green-900/30 p-3 rounded-lg text-green-400 font-bold text-xl">Ch. 17</div>
+                        <h3 class="text-2xl lg:text-3xl font-bold text-white">의식의 진화와 새로운 문명</h3>
+                    </div>
+
+                    <div class="concept-card p-8 rounded-2xl relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-green-500/10 rounded-full blur-3xl"></div>
+                        <h4 class="text-xl font-bold text-white mb-4">호모 퀀텀 (Homo Quantum)의 탄생</h4>
+                        <p class="text-slate-300 mb-6 leading-relaxed">
+                            우리는 현재 물질적 진보의 정점에 서 있지만, 영적 빈곤으로 인한 자멸의 위기에 처해 있습니다. 
+                            저자는 인류가 '물질적 인간'에서 <strong>'양자적 인간'</strong>으로 진화해야 한다고 역설합니다.
+                        </p>
+                        <ul class="space-y-2 text-sm text-slate-300 ml-4 border-l-2 border-slate-700 pl-4">
+                            <li><i class="fa-solid fa-arrow-right-long text-amber-500 mr-2"></i> <strong>소유 (Having)</strong>에서 <strong>존재 (Being)</strong>로</li>
+                            <li><i class="fa-solid fa-arrow-right-long text-amber-500 mr-2"></i> <strong>경쟁 (Competition)</strong>에서 <strong>협력 (Cooperation)</strong>으로</li>
+                            <li><i class="fa-solid fa-arrow-right-long text-amber-500 mr-2"></i> <strong>분리 (Separation)</strong>에서 <strong>통합 (Unity)</strong>으로</li>
+                        </ul>
+                        <p class="text-green-300 text-sm mt-6 font-bold">
+                            "신은 죽지 않았습니다. 우리가 깨어나기를 기다리고 있습니다."
+                        </p>
+                    </div>
+
+                    <div class="discussion-box">
+                        <div class="discussion-title"><i class="fa-regular fa-comments mr-2"></i> 심층 토론</div>
+                        <ul class="space-y-3 text-slate-300 text-sm">
+                            <li class="flex items-start"><i class="fa-solid fa-circle-question text-violet-400 mt-1 mr-3 text-xs"></i><span>내가 꿈꾸는 이상적인 미래 사회는 어떤 모습인가요? 그 사회에서 가장 중요하게 여겨질 가치는 무엇일까요?</span></li>
+                            <li class="flex items-start"><i class="fa-solid fa-circle-question text-violet-400 mt-1 mr-3 text-xs"></i><span>이 책을 읽기 전과 후, '신'과 '나'를 바라보는 관점이 어떻게 달라졌나요?</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Editor's Note -->
+                <div class="editor-note">
+                    <h3 class="text-2xl font-serif text-white mb-6 text-center">에디터의 말</h3>
+                    <p class="text-slate-300 mb-4 leading-relaxed">
+                        "아미트 고스와미의 《신은 죽지 않았다》 1부부터 5부까지의 여정을 함께해 주셔서 감사합니다.
+                        이 책은 단순히 '신이 있다'고 주장하는 책이 아닙니다. 과학이라는 언어로 신을 증명하고, 우리 각자가 그 신성의 일부임을 자각하게 만드는 
+                        <strong>'자기 혁명'의 지침서</strong>입니다."
+                    </p>
+                    <p class="text-slate-300 mb-6 leading-relaxed">
+                        "우리는 뇌라는 기계 속에 갇힌 유령이 아닙니다. 우리는 우주를 관찰하고 현실을 창조하는 주체이며, 서로 깊게 연결된 하나의 의식입니다. 
+                        이 양자적 세계관이 여러분의 삶을 더 주체적이고, 창의적이며, 사랑으로 가득 차게 만들기를 바랍니다."
+                    </p>
+                    <p class="text-amber-400 font-bold text-center text-lg italic">
+                        "지금, 당신의 의식은 무엇을 관찰하고 있습니까? <br>당신의 관찰이 당신의 현실이 됩니다."
+                    </p>
+                </div>
+
+                <div class="flex justify-start mt-12">
+                     <button onclick="showPage('12-4')" class="text-slate-400 hover:text-white flex items-center gap-2 transition">
+                        <i class="fa-solid fa-arrow-left"></i> 4부로 이동
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 border-t border-slate-900 py-12 text-center text-slate-500 text-sm">
+        <div class="mb-4">
+            <i class="fa-solid fa-infinity text-2xl text-slate-700"></i>
+        </div>
+        <p class="mb-2">&copy; 2025 VERITAS & Quantum Project. All rights reserved.</p>
+        <p class="text-slate-600 text-xs">Based on "God Is Not Dead" by Amit Goswami, PhD.</p>
+        <div class="mt-6 flex justify-center space-x-6">
+            <a href="#" class="hover:text-amber-400 transition"><i class="fa-brands fa-github text-xl"></i></a>
+            <a href="#" class="hover:text-amber-400 transition"><i class="fa-solid fa-envelope text-xl"></i></a>
+        </div>
+    </footer>
+
+    <script>
+        // Page Navigation Logic
+        function showPage(pageId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.page-section');
+            sections.forEach(section => {
+                section.classList.add('hidden');
+                section.classList.remove('fade-in'); // Reset animation class
+            });
+
+            // Show selected section
+            const selectedSection = document.getElementById(pageId);
+            if (selectedSection) {
+                selectedSection.classList.remove('hidden');
+                // Trigger reflow to restart animation
+                void selectedSection.offsetWidth; 
+                selectedSection.classList.add('fade-in');
+            }
+
+            // Update Navigation Active State (Desktop)
+            const navIds = ['12-1', '12-2', '12-3', '12-4', '12-5'];
+            navIds.forEach(id => {
+                const btn = document.getElementById('nav-' + id);
+                if(btn) {
+                    if (id === pageId) {
+                        btn.classList.add('nav-active');
+                        btn.classList.remove('opacity-80');
+                    } else {
+                        btn.classList.remove('nav-active');
+                        btn.classList.add('opacity-80');
+                    }
+                }
+            });
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            showPage('home');
+        });
+    </script>
+</body>
+</html>
