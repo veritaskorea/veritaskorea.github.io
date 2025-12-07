@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>신은 죽지 않았다 (개념정리) - VERITAS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;500;700&family=Noto+Sans+KR:wght@300;400;700&display=swap');
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #020617; /* Slate 950 */
+            color: #e2e8f0;
+            line-height: 1.8;
+        }
+        
+        h1, h2, h3, h4, h5, .serif {
+            font-family: 'Noto Serif KR', serif;
+        }
+
+        /* Animations */
+        .fade-in { animation: fadeIn 0.8s ease-out; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .nav-active {
+            color: #fbbf24; /* Amber 400 */
+            border-bottom: 2px solid #fbbf24;
+            text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+        }
+
+        /* Abstract Art Orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.4;
+            animation: float 15s infinite ease-in-out;
+            z-index: -1;
+        }
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -30px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+        }
+
+        /* Custom Components */
+        .quote-box {
+            border-left: 4px solid #fbbf24;
+            padding: 1.5rem;
+            font-style: italic;
+            color: #cbd5e1;
+            margin: 2rem 0;
+            background: linear-gradient(90deg, rgba(251, 191, 36, 0.05) 0%, transparent 100%);
+            border-radius: 0 1rem 1rem 0;
+        }
+
+        .concept-card {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            transition: all 0.3s ease;
+        }
+        .concept-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(251, 191, 36, 0.4);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+        }
+
+        .discussion-box {
+            background: linear-gradient(135deg, rgba(76, 29, 149, 0.1) 0%, rgba(30, 27, 75, 0.3) 100%);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .discussion-title {
+            color: #c4b5fd;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .editor-note {
+            background-color: #1e1b4b; /* Indigo 950 */
+            border: 1px solid #4338ca;
+            padding: 2.5rem;
+            border-radius: 1rem;
+            position: relative;
+            margin-top: 4rem;
+        }
+        .editor-note::before {
+            content: '\f10d';
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            top: -20px;
+            left: 30px;
+            font-size: 3rem;
+            color: #4338ca;
+            background-color: #020617;
+            padding: 0 10px;
+        }
+
+        /* Quantum Map Specific Styles */
+        .node-btn {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .node-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.6);
+            z-index: 20;
+        }
+        .node-active {
+            background-color: #fbbf24 !important; /* Amber 400 */
+            color: #0f172a !important; /* Slate 900 */
+            box-shadow: 0 0 30px rgba(251, 191, 36, 0.8);
+            transform: scale(1.15);
+            border-color: #fff !important;
+            z-index: 20;
+        }
+        .connection-line {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, #fbbf24 0%, rgba(251, 191, 36, 0) 100%);
+            transform-origin: left center;
+            z-index: 0;
+            opacity: 0.3;
+            transition: opacity 0.3s;
+        }
+        .map-container:hover .connection-line {
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen selection:bg-amber-500 selection:text-slate-900">
+
+    <!-- Navigation Bar -->
+    <nav class="sticky top-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800 shadow-2xl">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo with VERITAS -->
+                <a href="#" onclick="showPage('home')" class="group flex items-center gap-3 hover:text-amber-300 transition">
+                    <div class="flex flex-col items-end border-r-2 border-slate-700 pr-3 mr-1">
+                        <span class="text-xs font-bold text-slate-400 tracking-[0.2em] group-hover:text-amber-400 transition">VERITAS</span>
+                        <span class="text-[0.6rem] text-slate-600 uppercase tracking-wider">Presents</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-2xl font-bold text-amber-400">
+                        <i class="fa-solid fa-infinity fa-lg"></i>
+                        <span class="tracking-widest font-serif">QUANTUM GOD</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden lg:flex space-x-6 text-sm font-medium tracking-wide text-slate-300">
+                    <button onclick="showPage('map')" id="nav-map" class="text-amber-400 hover:text-amber-200 transition-all py-2 border border-amber-500/30 rounded px-3 bg-amber-900/10"><i class="fa-solid fa-sitemap mr-1"></i> 개념 지도</button>
+                    <button onclick="showPage('12-1')" id="nav-12-1" class="hover:text-amber-300 transition-all py-2 opacity-80 hover:opacity-100">1부: 증거</button>
+                    <button onclick="showPage('12-2')" id="nav-12-2" class="hover:text-amber-300 transition-all py-2 opacity-80 hover:opacity-100">2부: 과학적 증거</button>
+                    <button onclick="showPage('12-3')" id="nav-12-3" class="hover:text-amber-300 transition-all py-2 opacity-80 hover:opacity-100">3부: 양자적 삶</button>
+                    <button onclick="showPage('12-4')" id="nav-12-4" class="hover:text-amber-300 transition-all py-2 opacity-80 hover:opacity-100">4부: 선과 악</button>
+                    <button onclick="showPage('12-5')" id="nav-12-5" class="hover:text-amber-300 transition-all py-2 opacity-80 hover:opacity-100">5부: 실천</button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="lg:hidden flex items-center">
+                    <button onclick="toggleMobileMenu()" class="text-slate-300 hover:text-amber-400 focus:outline-none transition">
+                        <i class="fa-solid fa-bars-staggered text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-slate-900 border-t border-slate-800 absolute w-full left-0 z-50">
+            <a href="#" onclick="showPage('map'); toggleMobileMenu()" class="block py-4 px-6 hover:bg-slate-800 border-b border-slate-800/50 text-amber-400 font-bold"><i class="fa-solid fa-sitemap mr-2"></i>개념 지도 (Interactive Map)</a>
+            <a href="#" onclick="showPage('12-1'); toggleMobileMenu()" class="block py-4 px-6 hover:bg-slate-800 border-b border-slate-800/50 text-slate-300">1부: 과학적 증거</a>
+            <a href="#" onclick="showPage('12-2'); toggleMobileMenu()" class="block py-4 px-6 hover:bg-slate-800 border-b border-slate-800/50 text-slate-300">2부: 신의 존재 증거</a>
+            <a href="#" onclick="showPage('12-3'); toggleMobileMenu()" class="block py-4 px-6 hover:bg-slate-800 border-b border-slate-800/50 text-slate-300">3부: 양자적 삶</a>
+            <a href="#" onclick="showPage('12-4'); toggleMobileMenu()" class="block py-4 px-6 hover:bg-slate-800 border-b border-slate-800/50 text-slate-300">4부: 신과 선과 악</a>
+            <a href="#" onclick="showPage('12-5'); toggleMobileMenu()" class="block py-4 px-6 hover:bg-slate-800 text-slate-300">5부: 영적 실천</a>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow container mx-auto px-4 py-8 relative max-w-5xl">
+        
+        <!-- Background Art -->
+        <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+            <div class="orb bg-violet-900 w-[500px] h-[500px] top-[-100px] left-[-100px]"></div>
+            <div class="orb bg-blue-900 w-[600px] h-[600px] bottom-[-200px] right-[-100px]" style="animation-delay: -5s;"></div>
+            <div class="orb bg-amber-700 w-[300px] h-[300px] top-[40%] left-[60%] opacity-20" style="animation-duration: 20s;"></div>
+        </div>
+
+        <!-- PAGE: HOME -->
+        <section id="home" class="page-section fade-in">
+            <div class="text-center py-10 lg:py-20">
+                <div class="mb-6 inline-flex items-center justify-center w-24 h-24 rounded-full bg-slate-800/80 border border-slate-700 shadow-xl shadow-amber-900/10">
+                    <i class="fa-solid fa-book-journal-whills text-5xl text-amber-500"></i>
+                </div>
+                
+                <h1 class="text-5xl lg:text-7xl font-bold mb-6 tracking-tight">
+                    <span class="block text-slate-100 mb-2">신은</span>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-amber-500 to-amber-600">죽지 않았다</span>
+                </h1>
+                <p class="text-xl lg:text-2xl text-slate-400 serif italic max-w-3xl mx-auto mb-12">
+                    "물질적 리얼리즘의 한계를 넘어,<br>양자 물리학이 밝혀낸 의식의 과학적 증명"
+                </p>
+
+                <div class="flex justify-center gap-4">
+                    <button onclick="showPage('map')" class="bg-amber-600 hover:bg-amber-500 text-white font-bold py-3 px-8 rounded-full shadow-lg shadow-amber-600/30 transition transform hover:scale-105 flex items-center">
+                        <i class="fa-solid fa-sitemap mr-2"></i> 개념 지도 보기
+                    </button>
+                    <button onclick="showPage('12-1')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold py-3 px-8 rounded-full border border-slate-600 transition transform hover:scale-105">
+                        책 내용 시작하기 <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE: CONCEPT MAP (Interactive Tree) -->
+        <section id="map" class="page-section hidden fade-in">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-white mb-2">일원론적 관념론 & 양자물리학 개념 트리</h2>
+                <p class="text-slate-400 text-sm">중앙의 '의식'을 중심으로 뻗어나가는 양자 개념을 클릭하여 확인하세요.</p>
+            </div>
+
+            <!-- Map Container (Desktop: Radial, Mobile: Stack) -->
+            <div class="flex flex-col lg:flex-row gap-8 items-center justify-center min-h-[600px]">
+                
+                <!-- The Visual Tree -->
+                <div class="map-container relative w-[350px] h-[350px] lg:w-[500px] lg:h-[500px] flex-shrink-0">
+                    
+                    <!-- Connecting Lines (SVG) -->
+                    <svg class="absolute inset-0 w-full h-full pointer-events-none" style="z-index: 0;">
+                        <!-- Lines will be dynamically positioned via CSS or hardcoded for radial -->
+                        <line x1="50%" y1="50%" x2="50%" y2="10%" stroke="#fbbf24" stroke-width="2" stroke-opacity="0.3" /> <!-- Top -->
+                        <line x1="50%" y1="50%" x2="85%" y2="30%" stroke="#fbbf24" stroke-width="2" stroke-opacity="0.3" /> <!-- Top Right -->
+                        <line x1="50%" y1="50%" x2="85%" y2="70%" stroke="#fbbf24" stroke-width="2" stroke-opacity="0.3" /> <!-- Bottom Right -->
+                        <line x1="50%" y1="50%" x2="50%" y2="90%" stroke="#fbbf24" stroke-width="2" stroke-opacity="0.3" /> <!-- Bottom -->
+                        <line x1="50%" y1="50%" x2="15%" y2="70%" stroke="#fbbf24" stroke-width="2" stroke-opacity="0.3" /> <!-- Bottom Left -->
+                        <line x1="50%" y1="50%" x2="15%" y2="30%" stroke="#fbbf24" stroke-width="2" stroke-opacity="0.3" /> <!-- Top Left -->
+                    </svg>
+
+                    <!-- Center Node (Root) -->
+                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 w-32 h-32 lg:w-40 lg:h-40 bg-gradient-to-br from-amber-500 to-amber-700 rounded-full flex flex-col justify-center items-center text-center shadow-[0_0_50px_rgba(245,158,11,0.4)] border-4 border-slate-900 cursor-pointer animate-pulse" onclick="selectNode('root')">
+                        <i class="fa-solid fa-brain text-2xl lg:text-3xl text-white mb-1"></i>
+                        <span class="font-bold text-white text-sm lg:text-base leading-tight">의식<br><span class="text-[10px] lg:text-xs opacity-80">일원론적 관념론</span></span>
+                    </div>
+
+                    <!-- Branch Nodes (Radial Positioning) -->
+                    <!-- 1. Superposition (Top) -->
+                    <button onclick="selectNode('branch1')" id="btn-branch1" class="node-btn absolute top-[10%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-slate-800 border border-slate-600 w-24 h-24 rounded-full flex flex-col justify-center items-center hover:bg-slate-700 z-10">
+                        <i class="fa-solid fa-wave-square text-blue-400 mb-1"></i>
+                        <span class="text-[10px] font-bold text-slate-200">양자 중첩</span>
+                    </button>
+
+                    <!-- 2. Observer (Top Right) -->
+                    <button onclick="selectNode('branch2')" id="btn-branch2" class="node-btn absolute top-[30%] right-[15%] transform translate-x-1/2 -translate-y-1/2 bg-slate-800 border border-slate-600 w-24 h-24 rounded-full flex flex-col justify-center items-center hover:bg-slate-700 z-10">
+                        <i class="fa-solid fa-eye text-green-400 mb-1"></i>
+                        <span class="text-[10px] font-bold text-slate-200">관찰자 효과</span>
+                    </button>
+
+                    <!-- 3. Non-locality (Bottom Right) -->
+                    <button onclick="selectNode('branch3')" id="btn-branch3" class="node-btn absolute bottom-[30%] right-[15%] transform translate-x-1/2 translate-y-1/2 bg-slate-800 border border-slate-600 w-24 h-24 rounded-full flex flex-col justify-center items-center hover:bg-slate-700 z-10">
+                        <i class="fa-solid fa-network-wired text-purple-400 mb-1"></i>
+                        <span class="text-[10px] font-bold text-slate-200">비국소성</span>
+                    </button>
+
+                    <!-- 4. Quantum Leap (Bottom) -->
+                    <button onclick="selectNode('branch4')" id="btn-branch4" class="node-btn absolute bottom-[10%] left-1/2 transform -translate-x-1/2 translate-y-1/2 bg-slate-800 border border-slate-600 w-24 h-24 rounded-full flex flex-col justify-center items-center hover:bg-slate-700 z-10">
+                        <i class="fa-solid fa-stairs text-pink-400 mb-1"></i>
+                        <span class="text-[10px] font-bold text-slate-200">양자 도약</span>
+                    </button>
+
+                    <!-- 5. Entanglement (Bottom Left) -->
+                    <button onclick="selectNode('branch5')" id="btn-branch5" class="node-btn absolute bottom-[30%] left-[15%] transform -translate-x-1/2 translate-y-1/2 bg-slate-800 border border-slate-600 w-24 h-24 rounded-full flex flex-col justify-center items-center hover:bg-slate-700 z-10">
+                        <i class="fa-solid fa-link text-red-400 mb-1"></i>
+                        <span class="text-[10px] font-bold text-slate-200">양자 얽힘</span>
+                    </button>
+
+                    <!-- 6. Complementarity (Top Left) -->
+                    <button onclick="selectNode('branch6')" id="btn-branch6" class="node-btn absolute top-[30%] left-[15%] transform -translate-x-1/2 -translate-y-1/2 bg-slate-800 border border-slate-600 w-24 h-24 rounded-full flex flex-col justify-center items-center hover:bg-slate-700 z-10">
+                        <i class="fa-solid fa-yin-yang text-teal-400 mb-1"></i>
+                        <span class="text-[10px] font-bold text-slate-200">상보성</span>
+                    </button>
+                </div>
+
+                <!-- Info Panel -->
+                <div id="info-panel" class="w-full lg:w-96 bg-slate-900/90 border border-slate-700 p-6 rounded-2xl shadow-2xl transition-all duration-300 min-h-[400px]">
+                    <!-- Dynamic Content Will Be Injected Here -->
+                    <div class="h-full flex flex-col justify-center items-center text-center text-slate-500">
+                        <i class="fa-regular fa-hand-pointer text-4xl mb-4 animate-bounce"></i>
+                        <p>왼쪽의 아이콘을 클릭하여<br>상세 내용을 확인하세요.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE: 12-1 to 12-5 (Content Sections - Preserved) -->
+        <!-- Just referencing them to keep file size manageable, 
+             assuming user wants the FULL content. I will include the full updated content below. -->
+        
+        <!-- PAGE: 12-1 -->
+        <section id="12-1" class="page-section hidden fade-in">
+            <div class="border-b border-slate-800 pb-8 mb-10">
+                <span class="text-blue-500 font-bold tracking-widest text-sm uppercase mb-2 block">Part 1</span>
+                <h2 class="text-3xl lg:text-5xl font-bold text-slate-100">과학적 증거: 유물론의 종말</h2>
+            </div>
+            <div class="space-y-12">
+                <div class="bg-slate-900/50 p-8 rounded-2xl border border-slate-800">
+                    <h3 class="text-2xl font-bold text-white mb-4">왜 유물론은 실패했는가?</h3>
+                    <p class="text-slate-300 mb-4">현대 과학은 "모든 것은 물질이다"라는 유물론적 신념에 빠져 있습니다. 하지만 양자물리학은 관찰자(의식)가 없다면 물질은 단지 파동일 뿐임을 밝혀냈습니다.</p>
+                    <div class="quote-box">"물질이 의식을 만드는 것이 아니라, 의식이 물질을 만든다."</div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="concept-card p-6 rounded-xl"><h4 class="font-bold text-white mb-2 text-blue-400">상향 인과 (오류)</h4><p class="text-sm text-slate-400">입자 -> 원자 -> 뇌 -> 의식. 자유의지를 설명할 수 없음.</p></div>
+                    <div class="concept-card p-6 rounded-xl border-blue-500 border"><h4 class="font-bold text-white mb-2 text-blue-400">하향 인과 (진실)</h4><p class="text-sm text-slate-400">의식 -> 파동 붕괴 -> 물질(현실). 신의 개입 방식.</p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE: 12-2 -->
+        <section id="12-2" class="page-section hidden fade-in">
+            <div class="border-b border-slate-800 pb-8 mb-10">
+                <span class="text-purple-500 font-bold tracking-widest text-sm uppercase mb-2 block">Part 2</span>
+                <h2 class="text-3xl lg:text-5xl font-bold text-slate-100">신의 존재 증거</h2>
+            </div>
+            <div class="space-y-12">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-slate-800 p-6 rounded-xl"><h4 class="text-purple-400 font-bold mb-3">관찰자 효과</h4><p class="text-slate-300 text-sm">태초의 우주를 관찰하여 현실로 만든 존재는 '신(보편적 관찰자)'이어야 합니다.</p></div>
+                    <div class="bg-slate-800 p-6 rounded-xl"><h4 class="text-purple-400 font-bold mb-3">양자 진화</h4><p class="text-slate-300 text-sm">진화는 무작위가 아니라, 의식이 더 복잡한 표현을 위해 선택한 양자 도약의 연속입니다.</p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE: 12-3 -->
+        <section id="12-3" class="page-section hidden fade-in">
+            <div class="border-b border-slate-800 pb-8 mb-10">
+                <span class="text-pink-500 font-bold tracking-widest text-sm uppercase mb-2 block">Part 3</span>
+                <h2 class="text-3xl lg:text-5xl font-bold text-slate-100">양자적 삶과 치유</h2>
+            </div>
+            <div class="bg-slate-900/80 p-8 rounded-2xl shadow-lg border border-slate-700 relative overflow-hidden">
+                <h3 class="text-2xl font-bold text-white mb-4">양자 치유와 행복</h3>
+                <p class="text-slate-300 mb-6">의식은 몸을 통제합니다(하향 인과). 긍정적 사고와 창의적 도약은 면역 체계를 활성화합니다. 행복은 쾌락(뇌의 보상)이 아니라, 의식의 확장과 몰입에서 오는 기쁨입니다.</p>
+            </div>
+        </section>
+
+        <!-- PAGE: 12-4 -->
+        <section id="12-4" class="page-section hidden fade-in">
+            <div class="border-b border-slate-800 pb-8 mb-10">
+                <span class="text-teal-500 font-bold tracking-widest text-sm uppercase mb-2 block">Part 4</span>
+                <h2 class="text-3xl lg:text-5xl font-bold text-slate-100">신과 선과 악</h2>
+            </div>
+            <div class="space-y-8">
+                <div class="bg-slate-800 p-6 rounded-xl border-l-4 border-red-500">
+                    <h4 class="text-white font-bold mb-2">악의 존재 이유</h4>
+                    <p class="text-slate-300 text-sm">악은 '분리감'에서 옵니다. 하지만 이 분리가 있어야만 우리는 자유의지를 가지고 다시 '통합(선)'을 선택할 수 있습니다. 악은 창조성을 위한 필연적 배경입니다.</p>
+                </div>
+                <div class="bg-slate-800 p-6 rounded-xl border-l-4 border-teal-500">
+                    <h4 class="text-white font-bold mb-2">양자 윤리</h4>
+                    <p class="text-slate-300 text-sm">우리는 비국소적으로 연결되어 있습니다(Entanglement). 타인을 해치는 것은 곧 나를 해치는 것입니다. 이것이 도덕의 과학적 근거입니다.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE: 12-5 -->
+        <section id="12-5" class="page-section hidden fade-in">
+            <div class="border-b border-slate-800 pb-8 mb-10">
+                <span class="text-amber-500 font-bold tracking-widest text-sm uppercase mb-2 block">Part 5</span>
+                <h2 class="text-3xl lg:text-5xl font-bold text-slate-100">실천: 퀀텀 액티비즘</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="concept-card p-6 rounded-2xl border-t-4 border-amber-500"><h5 class="text-white font-bold mb-2">바르게 생각하기</h5><p class="text-sm text-slate-400">유물론을 버리고 '모든 것은 연결되어 있다'는 양자 세계관 갖기.</p></div>
+                <div class="concept-card p-6 rounded-2xl border-t-4 border-amber-500"><h5 class="text-white font-bold mb-2">바르게 살기</h5><p class="text-sm text-slate-400">명상과 몰입을 통해 내면의 신성과 접속하고 창의성 발휘하기.</p></div>
+                <div class="concept-card p-6 rounded-2xl border-t-4 border-amber-500"><h5 class="text-white font-bold mb-2">바르게 행동하기</h5><p class="text-sm text-slate-400">분리가 아닌 통합과 사랑의 가치로 사회 문제에 참여하기.</p></div>
+            </div>
+            <div class="editor-note">
+                <h3 class="text-2xl font-serif text-white mb-6 text-center">에디터의 말</h3>
+                <p class="text-slate-300 mb-4 leading-relaxed text-center">"지금, 당신의 의식은 무엇을 관찰하고 있습니까? 당신의 관찰이 당신의 현실이 됩니다."</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 border-t border-slate-900 py-12 text-center text-slate-500 text-sm">
+        <p>&copy; 2025 VERITAS & Quantum God Project.</p>
+    </footer>
+
+    <script>
+        // Concept Map Data
+        const nodes = {
+            root: {
+                title: "일원론적 관념론<br>(Monistic Idealism)",
+                icon: "fa-brain",
+                color: "text-amber-500",
+                content: `
+                    <div class="space-y-4 animate-fade-in">
+                        <h4 class="text-xl font-bold text-white border-b border-slate-700 pb-2">핵심 전제</h4>
+                        <p class="text-lg text-amber-400 font-serif italic">"물질이 의식을 만드는 것이 아니라,<br>의식이 물질을 만든다."</p>
+                        <p class="text-sm text-slate-300 text-left">
+                            이 책의 근간이 되는 철학입니다. 의식(Consciousness)이 우주의 근원(Ground of Being)이며, 물질은 의식 안에서 일어나는 가능성 중 하나일 뿐입니다.
+                        </p>
+                    </div>
+                `
+            },
+            branch1: {
+                title: "양자 중첩 & 파동 함수",
+                icon: "fa-wave-square",
+                color: "text-blue-400",
+                content: `
+                    <div class="space-y-4 animate-fade-in">
+                        <div class="bg-slate-800 p-3 rounded text-left mb-3">
+                            <span class="text-xs font-bold text-slate-500 block mb-1">PHYSICS (슈뢰딩거)</span>
+                            <p class="text-sm text-blue-300">물질은 관찰되기 전까지 여러 가능성이 공존하는 '파동' 상태다.</p>
+                        </div>
+                        <div class="text-left">
+                            <span class="text-xs font-bold text-amber-500 block mb-1">GOD'S ATTRIBUTE</span>
+                            <h4 class="text-lg font-bold text-white mb-2">전능함 & 초월성</h4>
+                            <p class="text-sm text-slate-300">신은 시공간 너머의 무한한 가능성(양자장) 그 자체입니다. 현실로 드러나기 전의 모든 미래는 신의 의식 안에 잠재해 있습니다.</p>
+                        </div>
+                    </div>
+                `
+            },
+            branch2: {
+                title: "관찰자 효과",
+                icon: "fa-eye",
+                color: "text-green-400",
+                content: `
+                    <div class="space-y-4 animate-fade-in">
+                        <div class="bg-slate-800 p-3 rounded text-left mb-3">
+                            <span class="text-xs font-bold text-slate-500 block mb-1">PHYSICS (코펜하겐 해석)</span>
+                            <p class="text-sm text-green-300">지성적 관찰자가 개입할 때 파동이 붕괴되어 입자(현실)가 된다.</p>
+                        </div>
+                        <div class="text-left">
+                            <span class="text-xs font-bold text-amber-500 block mb-1">GOD'S ACTIVITY</span>
+                            <h4 class="text-lg font-bold text-white mb-2">창조 & 하향 인과</h4>
+                            <p class="text-sm text-slate-300">우주를 현실로 만든 최초의 관찰자는 신입니다. 또한 우리 안의 의식(신성)이 뇌(물질)를 통제하고 현실을 선택합니다(자유의지).</p>
+                        </div>
+                    </div>
+                `
+            },
+            branch3: {
+                title: "비국소성 (Non-locality)",
+                icon: "fa-network-wired",
+                color: "text-purple-400",
+                content: `
+                    <div class="space-y-4 animate-fade-in">
+                        <div class="bg-slate-800 p-3 rounded text-left mb-3">
+                            <span class="text-xs font-bold text-slate-500 block mb-1">PHYSICS (벨의 정리)</span>
+                            <p class="text-sm text-purple-300">거리에 상관없이 두 입자가 즉각적으로 신호를 주고받는다.</p>
+                        </div>
+                        <div class="text-left">
+                            <span class="text-xs font-bold text-amber-500 block mb-1">GOD'S EXISTENCE</span>
+                            <h4 class="text-lg font-bold text-white mb-2">편재성 & 하나의 마음</h4>
+                            <p class="text-sm text-slate-300">신은 어디에나 동시에 존재합니다(무소부재). 너와 나는 분리된 개체가 아니라 비국소적으로 연결된 하나의 의식(One Mind)입니다.</p>
+                        </div>
+                    </div>
+                `
+            },
+            branch4: {
+                title: "양자 도약 (Quantum Leap)",
+                icon: "fa-stairs",
+                color: "text-pink-400",
+                content: `
+                    <div class="space-y-4 animate-fade-in">
+                        <div class="bg-slate-800 p-3 rounded text-left mb-3">
+                            <span class="text-xs font-bold text-slate-500 block mb-1">PHYSICS (보어의 원자모형)</span>
+                            <p class="text-sm text-pink-300">전자가 중간 과정 없이 궤도를 불연속적으로 이동한다.</p>
+                        </div>
+                        <div class="text-left">
+                            <span class="text-xs font-bold text-amber-500 block mb-1">GOD'S EXPRESSION</span>
+                            <h4 class="text-lg font-bold text-white mb-2">창의성 & 진화</h4>
+                            <p class="text-sm text-slate-300">새로운 아이디어는 과거 데이터의 분석이 아닌 직관적 도약으로 옵니다. 진화는 생명체의 의식적이고 창의적인 도약의 결과입니다.</p>
+                        </div>
+                    </div>
+                `
+            },
+            branch5: {
+                title: "양자 얽힘 & 기억",
+                icon: "fa-link",
+                color: "text-red-400",
+                content: `
+                    <div class="space-y-4 animate-fade-in">
+                        <div class="bg-slate-800 p-3 rounded text-left mb-3">
+                            <span class="text-xs font-bold text-slate-500 block mb-1">PHYSICS</span>
+                            <p class="text-sm text-red-300">한 번 상호작용한 입자들은 영원히 서로의 상태에 영향을 미친다.</p>
+                        </div>
+                        <div class="text-left">
+                            <span class="text-xs font-bold text-amber-500 block mb-1">SOUL & ETHICS</span>
+                            <h4 class="text-lg font-bold text-white mb-2">영생 & 도덕</h4>
+                            <p class="text-sm text-slate-300">우리의 경험(카르마)은 얽힘의 형태로 보존되어 환생의 씨앗(양자 모나드)이 됩니다. 타인을 해치는 것은 곧 얽혀있는 나를 해치는 것입니다.</p>
+                        </div>
+                    </div>
+                `
+            },
+            branch6: {
+                title: "상보성 원리",
+                icon: "fa-yin-yang",
+                color: "text-teal-400",
+                content: `
+                    <div class="space-y-4 animate-fade-in">
+                        <div class="bg-slate-800 p-3 rounded text-left mb-3">
+                            <span class="text-xs font-bold text-slate-500 block mb-1">PHYSICS</span>
+                            <p class="text-sm text-teal-300">빛은 입자이면서 동시에 파동이다. 모순되어 보이지만 상호 보완적이다.</p>
+                        </div>
+                        <div class="text-left">
+                            <span class="text-xs font-bold text-amber-500 block mb-1">INTEGRATION</span>
+                            <h4 class="text-lg font-bold text-white mb-2">삶의 통합</h4>
+                            <p class="text-sm text-slate-300">과학(입자)과 종교(파동), 외면의 성취(Doing)와 내면의 행복(Being)을 조화롭게 추구하는 것이 양자 활동가의 삶입니다.</p>
+                        </div>
+                    </div>
+                `
+            }
+        };
+
+        function showPage(pageId) {
+            const sections = document.querySelectorAll('.page-section');
+            sections.forEach(section => {
+                section.classList.add('hidden');
+                section.classList.remove('fade-in');
+            });
+            const selectedSection = document.getElementById(pageId);
+            if (selectedSection) {
+                selectedSection.classList.remove('hidden');
+                void selectedSection.offsetWidth; 
+                selectedSection.classList.add('fade-in');
+            }
+            
+            // Nav update
+            const navIds = ['map', '12-1', '12-2', '12-3', '12-4', '12-5'];
+            navIds.forEach(id => {
+                const btn = document.getElementById('nav-' + id);
+                if(btn) {
+                    if (id === pageId) {
+                        btn.classList.add('nav-active');
+                        if(id !== 'map') btn.classList.remove('opacity-80');
+                    } else {
+                        btn.classList.remove('nav-active');
+                        if(id !== 'map') btn.classList.add('opacity-80');
+                    }
+                }
+            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        function selectNode(nodeKey) {
+            const data = nodes[nodeKey];
+            const panel = document.getElementById('info-panel');
+            
+            // Reset buttons
+            document.querySelectorAll('.node-btn').forEach(btn => btn.classList.remove('node-active'));
+            
+            // Highlight selected button (if not root)
+            if(nodeKey !== 'root') {
+                document.getElementById('btn-' + nodeKey).classList.add('node-active');
+            }
+
+            // Update Panel Content
+            panel.innerHTML = `
+                <div class="flex items-center gap-3 mb-4 border-b border-slate-700 pb-4">
+                    <i class="fa-solid ${data.icon} text-3xl ${data.color}"></i>
+                    <h3 class="text-2xl font-bold text-white text-left leading-tight">${data.title}</h3>
+                </div>
+                ${data.content}
+            `;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            showPage('home');
+        });
+    </script>
+</body>
+</html>
