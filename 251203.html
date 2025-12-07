@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> 양자: 고스와미 vs 위대한 지성들 - VERITAS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;500;700&family=Noto+Sans+KR:wght@300;400;700&display=swap');
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #0f172a; /* Slate 900 */
+            color: #e2e8f0;
+            line-height: 1.8;
+        }
+        
+        h1, h2, h3, h4, .serif {
+            font-family: 'Noto Serif KR', serif;
+        }
+
+        .fade-in { animation: fadeIn 0.8s ease-out; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Card Styles */
+        .vs-card {
+            background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%);
+            border: 1px solid #334155;
+            transition: all 0.3s ease;
+        }
+        .vs-card:hover {
+            transform: translateY(-5px);
+            border-color: #fbbf24;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Bubble Styles */
+        .speech-bubble {
+            position: relative;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            margin-bottom: 1rem;
+        }
+        .bubble-left {
+            background-color: #334155;
+            border-top-left-radius: 0;
+        }
+        .bubble-right {
+            background-color: #1e1b4b;
+            border: 1px solid #6366f1;
+            border-top-right-radius: 0;
+            text-align: right;
+        }
+
+        /* Table Styles */
+        .comp-table {
+            border-collapse: separate;
+            border-spacing: 0;
+            width: 100%;
+            border: 1px solid #334155;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            margin-top: 2rem;
+        }
+        .comp-table th {
+            background-color: #0f172a;
+            color: #fbbf24;
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 2px solid #334155;
+        }
+        .comp-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #1e293b;
+            background-color: rgba(30, 41, 59, 0.5);
+            vertical-align: top;
+        }
+        .comp-table tr:last-child td { border-bottom: none; }
+
+        /* Highlight Text */
+        .highlight { color: #fbbf24; font-weight: bold; }
+        .highlight-blue { color: #60a5fa; font-weight: bold; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Header with VERITAS Logo -->
+    <header class="bg-slate-950 border-b border-slate-800 py-10 sticky top-0 z-50 backdrop-blur-md bg-opacity-95 shadow-2xl">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <div class="group flex items-center gap-4">
+                <div class="flex flex-col items-end border-r-2 border-slate-700 pr-4">
+                    <span class="text-sm font-bold text-slate-400 tracking-[0.3em] group-hover:text-amber-400 transition duration-300">VERITAS</span>
+                    <span class="text-[0.65rem] text-slate-600 uppercase tracking-widest">Present</span>
+                </div>
+                <div>
+                    <h1 class="text-2xl md:text-3xl font-bold text-white serif tracking-wide">
+                        이론 비교분석 <span class="text-amber-500 text-sm align-top ml-1">Quantum Dialogue</span>
+                    </h1>
+                </div>
+            </div>
+            <!-- Simple Tab Nav -->
+            <nav class="hidden md:flex gap-4">
+                <a href="#philosophy" class="px-4 py-2 text-sm font-bold text-slate-300 hover:text-white border border-slate-700 rounded-full hover:bg-slate-800 transition">철학적 논쟁</a>
+                <a href="#science" class="px-4 py-2 text-sm font-bold text-slate-300 hover:text-white border border-slate-700 rounded-full hover:bg-slate-800 transition">과학적 논쟁</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-16 max-w-6xl space-y-32">
+
+        <!-- Intro -->
+        <div class="text-center space-y-6 fade-in">
+            <h2 class="text-4xl md:text-5xl font-bold text-white serif leading-tight">
+                "이론은 비교분석하며 <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-200">더 선명해진다</span>"
+            </h2>
+            <p class="text-lg text-slate-400 max-w-3xl mx-auto leading-relaxed">
+                아미트 고스와미는 '일원론적 관념론'이 고립된 이론이 아니며,<br>
+                플라톤에서 시작되어 아인슈타인과 보어를 거쳐<br> 현대에 이르는 거대한 지적 흐름이라고 이야기하고 있습니다.
+            </p>
+        </div>
+
+        <!-- SECTION 1: PHILOSOPHY -->
+        <section id="philosophy" class="scroll-mt-32 fade-in">
+            <div class="flex items-center gap-4 mb-12 border-b border-indigo-500/30 pb-6">
+                <div class="p-4 bg-indigo-900/20 rounded-xl text-indigo-400 border border-indigo-500/50">
+                    <i class="fa-solid fa-book-open text-3xl"></i>
+                </div>
+                <div>
+                    <h3 class="text-3xl font-bold text-white mb-2">제1부: 철학자와의 대화</h3>
+                    <p class="text-indigo-300 font-medium">"의식(Consciousness)은 어디에서 오는가?"</p>
+                </div>
+            </div>
+
+            <!-- 1. Plato -->
+            <div class="space-y-12 mb-20">
+                <div class="vs-card rounded-3xl p-8 md:p-12 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-8 opacity-5 text-9xl font-serif text-white pointer-events-none">Idea</div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10">
+                        <!-- Left: Philosopher -->
+                        <div class="space-y-6">
+                            <div class="flex items-center gap-4">
+                                <div class="w-16 h-16 rounded-full bg-slate-700 flex items-center justify-center text-3xl shadow-lg">
+                                    <i class="fa-solid fa-landmark text-slate-300"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-2xl font-bold text-white">플라톤 (Plato)</h4>
+                                    <span class="text-sm text-slate-500 font-bold uppercase tracking-wider">고대 관념론</span>
+                                </div>
+                            </div>
+                            <div class="speech-bubble bubble-left">
+                                <p class="text-slate-300 italic text-lg leading-relaxed">
+                                    "우리가 눈으로 보는 현실 세계는 그림자에 불과하네. 진정한 실재는 저 너머에 있는 완벽하고 영원한 <strong>'이데아(Idea)'</strong>의 세계지."
+                                </p>
+                            </div>
+                            <div class="text-sm text-slate-400 pl-4 border-l-2 border-slate-600">
+                                <strong class="text-slate-200">핵심 주장:</strong> 현실 너머에 추상적이고 초월적인 원형의 세계가 존재한다.
+                            </div>
+                        </div>
+
+                        <!-- Right: Goswami -->
+                        <div class="space-y-6 text-right">
+                            <div class="flex items-center gap-4 justify-end">
+                                <div>
+                                    <h4 class="text-2xl font-bold text-amber-400">아미트 고스와미</h4>
+                                    <span class="text-sm text-amber-600 font-bold uppercase tracking-wider">양자 과학자</span>
+                                </div>
+                                <div class="w-16 h-16 rounded-full bg-indigo-900 flex items-center justify-center text-3xl shadow-lg border border-indigo-500">
+                                    <i class="fa-solid fa-atom text-white"></i>
+                                </div>
+                            </div>
+                            <div class="speech-bubble bubble-right">
+                                <p class="text-indigo-100 text-lg leading-relaxed">
+                                    "옳습니다, 플라톤 선생님. 하지만 이데아는 단순한 철학적 상상이 아닙니다. 그것은 양자 영역에 존재하는 <strong>'초정신적 원형(Archetypes)'</strong>이며, 수학적 파동으로 실재합니다."
+                                </p>
+                            </div>
+                            <div class="text-sm text-indigo-300 pr-4 border-r-2 border-indigo-500">
+                                <strong class="text-white">재해석:</strong> 플라톤의 철학을 양자역학을 통해 과학적 사실로 격상시킴.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Descartes -->
+                <div class="vs-card rounded-3xl p-8 md:p-12 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-8 opacity-5 text-9xl font-serif text-white pointer-events-none">Dual</div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10">
+                        <!-- Left -->
+                        <div class="space-y-6">
+                            <div class="flex items-center gap-4">
+                                <div class="w-16 h-16 rounded-full bg-slate-700 flex items-center justify-center text-3xl shadow-lg">
+                                    <i class="fa-solid fa-user text-slate-300"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-2xl font-bold text-white">데카르트 (Descartes)</h4>
+                                    <span class="text-sm text-slate-500 font-bold uppercase tracking-wider">심신 이원론</span>
+                                </div>
+                            </div>
+                            <div class="speech-bubble bubble-left">
+                                <p class="text-slate-300 italic text-lg leading-relaxed">
+                                    "나는 생각한다, 고로 존재한다. 하지만 정신(Mind)과 물질(Matter)은 본질적으로 다른 실체야. 이 둘은 완전히 분리되어 있지."
+                                </p>
+                            </div>
+                            <div class="text-sm text-slate-400 pl-4 border-l-2 border-slate-600">
+                                <strong class="text-slate-200">핵심 주장:</strong> 정신과 물질은 서로 다른 두 개의 실체이다 (이원론).
+                            </div>
+                        </div>
+
+                        <!-- Right -->
+                        <div class="space-y-6 text-right">
+                            <div class="flex items-center gap-4 justify-end">
+                                <div>
+                                    <h4 class="text-2xl font-bold text-amber-400">아미트 고스와미</h4>
+                                    <span class="text-sm text-amber-600 font-bold uppercase tracking-wider">통합적 관점</span>
+                                </div>
+                                <div class="w-16 h-16 rounded-full bg-indigo-900 flex items-center justify-center text-3xl shadow-lg border border-indigo-500">
+                                    <i class="fa-solid fa-arrows-to-circle text-white"></i>
+                                </div>
+                            </div>
+                            <div class="speech-bubble bubble-right">
+                                <p class="text-indigo-100 text-lg leading-relaxed">
+                                    "그 분리가 문제였습니다. 비물질인 마음이 어떻게 물질인 뇌를 움직입니까? 둘은 분리된 것이 아닙니다. <strong>'의식'</strong>이라는 하나의 뿌리에서 나온 두 가지 측면일 뿐입니다."
+                                </p>
+                            </div>
+                            <div class="text-sm text-indigo-300 pr-4 border-r-2 border-indigo-500">
+                                <strong class="text-white">비판:</strong> 데카르트의 '분리'를 극복하고 의식 안에서의 '통합'을 제시함.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Daniel Dennett -->
+                <div class="vs-card rounded-3xl p-8 md:p-12 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-8 opacity-5 text-9xl font-serif text-white pointer-events-none">Brain</div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10">
+                        <!-- Left -->
+                        <div class="space-y-6">
+                            <div class="flex items-center gap-4">
+                                <div class="w-16 h-16 rounded-full bg-slate-700 flex items-center justify-center text-3xl shadow-lg">
+                                    <i class="fa-solid fa-microchip text-slate-300"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-2xl font-bold text-white">대니얼 데닛 (Dennett)</h4>
+                                    <span class="text-sm text-slate-500 font-bold uppercase tracking-wider">현대 유물론</span>
+                                </div>
+                            </div>
+                            <div class="speech-bubble bubble-left">
+                                <p class="text-slate-300 italic text-lg leading-relaxed">
+                                    "의식은 환상이야. 뇌의 복잡한 뉴런들이 정보처리를 하면서 만들어낸 '사용자 인터페이스' 같은 착각일 뿐, 실체가 아니라네."
+                                </p>
+                            </div>
+                            <div class="text-sm text-slate-400 pl-4 border-l-2 border-slate-600">
+                                <strong class="text-slate-200">핵심 주장:</strong> 의식은 뇌의 작용에 의한 부산물(Epiphenomenon)이다.
+                            </div>
+                        </div>
+
+                        <!-- Right -->
+                        <div class="space-y-6 text-right">
+                            <div class="flex items-center gap-4 justify-end">
+                                <div>
+                                    <h4 class="text-2xl font-bold text-amber-400">아미트 고스와미</h4>
+                                    <span class="text-sm text-amber-600 font-bold uppercase tracking-wider">정면 반박</span>
+                                </div>
+                                <div class="w-16 h-16 rounded-full bg-indigo-900 flex items-center justify-center text-3xl shadow-lg border border-indigo-500">
+                                    <i class="fa-solid fa-ban text-red-400"></i>
+                                </div>
+                            </div>
+                            <div class="speech-bubble bubble-right">
+                                <p class="text-indigo-100 text-lg leading-relaxed">
+                                    "기계(뇌)에서 '느낌(Qualia)'이 나올 순 없습니다. 컴퓨터가 아무리 발달해도 슬픔을 느낄 순 없죠. 뇌는 의식의 생성자가 아니라, 의식을 수신하는 <strong>수신기(Receiver)</strong>입니다."
+                                </p>
+                            </div>
+                            <div class="text-sm text-indigo-300 pr-4 border-r-2 border-indigo-500">
+                                <strong class="text-white">반박:</strong> 유물론은 '의식의 난제'를 해결할 수 없다. 의식은 근원이다.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Philosophical Comparison Table -->
+            <div class="bg-slate-900 rounded-xl p-6 border border-slate-800 shadow-xl">
+                <h4 class="text-xl font-bold text-white mb-4 border-l-4 border-amber-500 pl-3">철학적 논쟁 요약표</h4>
+                <div class="overflow-x-auto">
+                    <table class="comp-table">
+                        <thead>
+                            <tr>
+                                <th width="15%">철학자 (사조)</th>
+                                <th width="30%">핵심 주장</th>
+                                <th width="30%">고스와미의 관점</th>
+                                <th width="25%">결정적 차이점</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm text-slate-300">
+                            <tr>
+                                <td class="font-bold text-white">플라톤<br><span class="text-xs text-slate-500">관념론</span></td>
+                                <td>이데아(Idea)가 진정한 실재다.</td>
+                                <td>이데아는 <span class="highlight">양자적 원형</span>으로 실재한다.</td>
+                                <td>철학적 추상 vs <span class="highlight">과학적 실재</span></td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-white">데카르트<br><span class="text-xs text-slate-500">이원론</span></td>
+                                <td>정신과 물질은 별개다.</td>
+                                <td>둘은 <span class="highlight">의식</span>의 두 측면이다.</td>
+                                <td>분리 vs <span class="highlight">통합</span></td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-white">데닛<br><span class="text-xs text-slate-500">유물론</span></td>
+                                <td>의식은 뇌의 부산물(환상)이다.</td>
+                                <td>의식은 우주의 <span class="highlight">근원(Ground)</span>이다.</td>
+                                <td>부산물 vs <span class="highlight">제1원인</span></td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-white">니체<br><span class="text-xs text-slate-500">실존주의</span></td>
+                                <td>신은 죽었다. 초인이 되어야 한다.</td>
+                                <td><span class="highlight">신은 부활했다.</span> 양자 활동가가 되라.</td>
+                                <td>신의 부재 vs <span class="highlight">신의 과학적 증명</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: SCIENCE -->
+        <section id="science" class="scroll-mt-32 fade-in">
+            <div class="flex items-center gap-4 mb-12 border-b border-teal-500/30 pb-6">
+                <div class="p-4 bg-teal-900/20 rounded-xl text-teal-400 border border-teal-500/50">
+                    <i class="fa-solid fa-flask text-3xl"></i>
+                </div>
+                <div>
+                    <h3 class="text-3xl font-bold text-white mb-2">제2부: 과학자와의 논쟁</h3>
+                    <p class="text-teal-300 font-medium">"실재(Reality)는 객관적인가, 창조되는 것인가?"</p>
+                </div>
+            </div>
+
+            <!-- Cards Container -->
+            <div class="space-y-12 mb-20">
+                
+                <!-- Niels Bohr -->
+                <div class="vs-card rounded-3xl p-8 md:p-12 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-8 opacity-5 text-9xl font-serif text-white pointer-events-none">Atom</div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10">
+                        <!-- Left -->
+                        <div class="space-y-6">
+                            <div class="flex items-center gap-4">
+                                <div class="w-16 h-16 rounded-full bg-slate-700 flex items-center justify-center text-3xl shadow-lg">
+                                    <i class="fa-solid fa-atom text-slate-300"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-2xl font-bold text-white">닐스 보어 (Bohr)</h4>
+                                    <span class="text-sm text-slate-500 font-bold uppercase tracking-wider">코펜하겐 해석</span>
+                                </div>
+                            </div>
+                            <div class="speech-bubble bubble-left">
+                                <p class="text-slate-300 italic text-lg leading-relaxed">
+                                    "미시 세계는 측정 전엔 확정되지 않네. 우리는 오직 관측된 '현상'에 대해서만 말할 수 있어. 그 너머에 무엇이 있는지는 묻지 말게."
+                                </p>
+                            </div>
+                            <div class="text-sm text-slate-400 pl-4 border-l-2 border-slate-600">
+                                <strong class="text-slate-200">핵심 주장:</strong> 상보성 원리. 관측 전의 실재에 대해서는 침묵함.
+                            </div>
+                        </div>
+
+                        <!-- Right -->
+                        <div class="space-y-6 text-right">
+                            <div class="flex items-center gap-4 justify-end">
+                                <div>
+                                    <h4 class="text-2xl font-bold text-amber-400">아미트 고스와미</h4>
+                                    <span class="text-sm text-amber-600 font-bold uppercase tracking-wider">거시적 확장</span>
+                                </div>
+                                <div class="w-16 h-16 rounded-full bg-teal-900 flex items-center justify-center text-3xl shadow-lg border border-teal-500">
+                                    <i class="fa-solid fa-expand text-white"></i>
+                                </div>
+                            </div>
+                            <div class="speech-bubble bubble-right">
+                                <p class="text-teal-100 text-lg leading-relaxed">
+                                    "보어의 통찰을 미시 세계에만 가두지 맙시다. 우주 전체가 양자적입니다. 관찰자는 단순한 장비가 아니라 <strong>'의식을 가진 존재'</strong>여야만 파동을 붕괴시킬 수 있습니다."
+                                </p>
+                            </div>
+                            <div class="text-sm text-teal-300 pr-4 border-r-2 border-teal-500">
+                                <strong class="text-white">확장:</strong> 보어의 침묵을 깨고 의식의 적극적 역할을 주장함.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Richard Dawkins -->
+                <div class="vs-card rounded-3xl p-8 md:p-12 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-8 opacity-5 text-9xl font-serif text-white pointer-events-none">DNA</div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10">
+                        <!-- Left -->
+                        <div class="space-y-6">
+                            <div class="flex items-center gap-4">
+                                <div class="w-16 h-16 rounded-full bg-slate-700 flex items-center justify-center text-3xl shadow-lg">
+                                    <i class="fa-solid fa-dna text-slate-300"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-2xl font-bold text-white">리처드 도킨스 (Dawkins)</h4>
+                                    <span class="text-sm text-slate-500 font-bold uppercase tracking-wider">진화생물학</span>
+                                </div>
+                            </div>
+                            <div class="speech-bubble bubble-left">
+                                <p class="text-slate-300 italic text-lg leading-relaxed">
+                                    "진화는 목적도 계획도 없어. 우연한 돌연변이와 자연선택이라는 <strong>'눈먼 시계공'</strong>의 맹목적 과정일 뿐이야."
+                                </p>
+                            </div>
+                            <div class="text-sm text-slate-400 pl-4 border-l-2 border-slate-600">
+                                <strong class="text-slate-200">핵심 주장:</strong> 진화는 무작위적이고 기계적인 과정이다.
+                            </div>
+                        </div>
+
+                        <!-- Right -->
+                        <div class="space-y-6 text-right">
+                            <div class="flex items-center gap-4 justify-end">
+                                <div>
+                                    <h4 class="text-2xl font-bold text-amber-400">아미트 고스와미</h4>
+                                    <span class="text-sm text-amber-600 font-bold uppercase tracking-wider">목적론적 진화</span>
+                                </div>
+                                <div class="w-16 h-16 rounded-full bg-teal-900 flex items-center justify-center text-3xl shadow-lg border border-teal-500">
+                                    <i class="fa-solid fa-stairs text-white"></i>
+                                </div>
+                            </div>
+                            <div class="speech-bubble bubble-right">
+                                <p class="text-teal-100 text-lg leading-relaxed">
+                                    "화석 기록의 '급격한 변화(단속 평형)'는 점진론으로 설명이 안 됩니다. 생명체는 진화의 압력이 올 때 <strong>'양자 도약'</strong>을 통해 의도적으로 새로운 변이를 선택합니다."
+                                </p>
+                            </div>
+                            <div class="text-sm text-teal-300 pr-4 border-r-2 border-teal-500">
+                                <strong class="text-white">반론:</strong> 진화는 우연이 아니라 의식의 창조적 선택이다.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Einstein -->
+                <div class="vs-card rounded-3xl p-8 md:p-12 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-8 opacity-5 text-9xl font-serif text-white pointer-events-none">E=mc²</div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10">
+                        <!-- Left -->
+                        <div class="space-y-6">
+                            <div class="flex items-center gap-4">
+                                <div class="w-16 h-16 rounded-full bg-slate-700 flex items-center justify-center text-3xl shadow-lg">
+                                    <i class="fa-solid fa-calculator text-slate-300"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-2xl font-bold text-white">아인슈타인 (Einstein)</h4>
+                                    <span class="text-sm text-slate-500 font-bold uppercase tracking-wider">실재론</span>
+                                </div>
+                            </div>
+                            <div class="speech-bubble bubble-left">
+                                <p class="text-slate-300 italic text-lg leading-relaxed">
+                                    "신은 주사위 놀이를 하지 않아. 관찰 여부와 상관없이 달은 저기에 떠 있어. 양자역학은 불완전해."
+                                </p>
+                            </div>
+                            <div class="text-sm text-slate-400 pl-4 border-l-2 border-slate-600">
+                                <strong class="text-slate-200">핵심 주장:</strong> 객관적 실재론. 관찰과 무관하게 세계는 존재한다.
+                            </div>
+                        </div>
+
+                        <!-- Right -->
+                        <div class="space-y-6 text-right">
+                            <div class="flex items-center gap-4 justify-end">
+                                <div>
+                                    <h4 class="text-2xl font-bold text-amber-400">아미트 고스와미</h4>
+                                    <span class="text-sm text-amber-600 font-bold uppercase tracking-wider">존경과 부정</span>
+                                </div>
+                                <div class="w-16 h-16 rounded-full bg-teal-900 flex items-center justify-center text-3xl shadow-lg border border-teal-500">
+                                    <i class="fa-solid fa-dice-d20 text-white"></i>
+                                </div>
+                            </div>
+                            <div class="speech-bubble bubble-right">
+                                <p class="text-teal-100 text-lg leading-relaxed">
+                                    "존경하는 선생님, 국소적 실재론은 틀렸습니다. 신은 주사위를 던집니다. 단, 그 주사위는 무작위가 아니라 <strong>의식의 의도</strong>에 따라 던져집니다."
+                                </p>
+                            </div>
+                            <div class="text-sm text-teal-300 pr-4 border-r-2 border-teal-500">
+                                <strong class="text-white">결론:</strong> 결정론적 우주가 아닌 창조적인 확률 우주.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scientific Comparison Table -->
+            <div class="bg-slate-900 rounded-xl p-6 border border-slate-800 shadow-xl">
+                <h4 class="text-xl font-bold text-white mb-4 border-l-4 border-teal-500 pl-3">과학적 논쟁 요약표</h4>
+                <div class="overflow-x-auto">
+                    <table class="comp-table">
+                        <thead>
+                            <tr>
+                                <th width="15%">과학자 (이론)</th>
+                                <th width="30%">핵심 주장</th>
+                                <th width="30%">고스와미의 해석</th>
+                                <th width="25%">결정적 차이점</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm text-slate-300">
+                            <tr>
+                                <td class="font-bold text-white">닐스 보어<br><span class="text-xs text-slate-500">코펜하겐</span></td>
+                                <td>측정 전엔 확정되지 않는다.</td>
+                                <td>관찰자는 <span class="highlight-blue">의식을 가진 존재</span>여야 한다.</td>
+                                <td>침묵 vs <span class="highlight-blue">영적 긍정</span></td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-white">폰 노이만<br><span class="text-xs text-slate-500">수학</span></td>
+                                <td>관측 연쇄의 끝엔 비물질이 필요하다.</td>
+                                <td><span class="highlight-blue">비물질적 의식</span>이 양자역학의 필수다.</td>
+                                <td>이론적 가능성 vs <span class="highlight-blue">확신</span></td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-white">에버렛 3세<br><span class="text-xs text-slate-500">다세계</span></td>
+                                <td>관측 시 우주는 무한히 갈라진다.</td>
+                                <td><span class="highlight-blue">의식의 선택</span>으로 하나의 우주만 남는다.</td>
+                                <td>무한 분기 vs <span class="highlight-blue">단일 선택</span></td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-white">도킨스<br><span class="text-xs text-slate-500">진화론</span></td>
+                                <td>진화는 맹목적이고 무작위적이다.</td>
+                                <td>진화는 <span class="highlight-blue">창의적 도약(Quantum Leap)</span>이다.</td>
+                                <td>무작위 생존 vs <span class="highlight-blue">의식 확장</span></td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-white">아인슈타인<br><span class="text-xs text-slate-500">실재론</span></td>
+                                <td>신은 주사위 놀이를 하지 않는다.</td>
+                                <td>신은 <span class="highlight-blue">의도</span>를 가지고 주사위를 던진다.</td>
+                                <td>결정론 vs <span class="highlight-blue">창조성</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final Thoughts -->
+        <section class="mt-20 mb-12 bg-gradient-to-br from-slate-900 to-indigo-950 p-12 rounded-3xl border border-slate-800 text-center shadow-2xl relative overflow-hidden fade-in">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl"></div>
+            <i class="fa-solid fa-scale-unbalanced-flip text-6xl text-amber-500 mb-8 relative z-10"></i>
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-8 relative z-10 serif">여러분의 결론은 무엇입니까?</h2>
+            <p class="text-xl text-slate-300 font-serif italic max-w-4xl mx-auto mb-8 leading-relaxed relative z-10">
+                "보시다시피 고스와미의 이론은 여러 이론들과 치열하게 대립합니다.<br>
+                하지만 바로 그 대립 지점에서 <span class="text-amber-400 border-b-2 border-amber-500">'물질 너머'</span>를 상상할 수 있는 새로운 틈이 열릴 수 있습니다."
+            </p>
+            <p class="text-slate-400 relative z-10 text-lg">
+                의식과 관측<br>
+                이 질문에 대한 답이 우리의 미래를 결정합니다.
+            </p>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 border-t border-slate-900 py-12 text-center text-slate-500 text-sm">
+        <div class="mb-4 flex justify-center items-center gap-2">
+            <span class="text-xs font-bold tracking-widest text-slate-600">VERITAS</span>
+            <i class="fa-solid fa-infinity text-amber-600/50"></i>
+        </div>
+        <p>&copy; 2025 VERITAS & Quantum Project. All rights reserved.</p>
+        <p class="mt-2 text-xs text-slate-600">Based on "God Is Not Dead" by Amit Goswami, PhD.</p>
+    </footer>
+
+</body>
+</html>
